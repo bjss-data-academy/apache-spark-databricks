@@ -5,11 +5,16 @@
 - why that matters
 
 - universal chunk of data
+- columns and data types
+- supported data types
+
+input and output
 - read and write many formats
 - csv
 - sql - Spark SQL is a thing see link
 - json
-- parquet
+- parquet - columnar datab adds acid, versioning
+
 
 working with data frames
 - load file
@@ -18,8 +23,8 @@ working with data frames
 - aggregation
 - business purpose olap oltp - see overall results
 - write file
-- - parquet by default IIRC explain benefits
-- code example
+- parquet by default ??
+- code examples throughout
   
 
 # Next
