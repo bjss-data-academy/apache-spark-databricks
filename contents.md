@@ -5,7 +5,7 @@
 - Spark in databricks
 
 ## Working with Notebooks
-- Overview (take from week 1)
+- [Using Notebooks](/notebooks.md)
 - Magic commands
 - Exploring files
 - Exploring tables
