@@ -2,6 +2,7 @@
 
 ## Overview of Spark
 - [Overview](/spark-overview.md)
+- Spark in databricks
 
 ## Working with Notebooks
 - Overview (take from week 1)
@@ -18,6 +19,17 @@
 - Add column
 - Supported data types
 - Casting between data types
+- reading and writing
+- file formats
+
+## Delta tables and Parquet files
+- https://delta.io/blog/delta-lake-vs-parquet-comparison/
+- default in databricks
+- ACID
+- Time Travel / versioning
+- Audit hostory
+- Builds on Parquet format
+- Compatible with Spark API incl Spark SQL
 
 ## Transforming data using DataFrames
 - [Aggregating Data](/aggregation.md)
