@@ -18,7 +18,6 @@ To select a programming language, enter one of the following as the first line:
 - %python
 - %r
 - %scala
-- %sql
 - %java
 
 ## Writing formatted text using markdown
@@ -62,6 +61,7 @@ __%sql__ allows use of Spark SQL.
 Very good to explore a SQL dataset and see what's there.
 
 ```sql
+%sql
 select * from users u where u.name = 'Alan' 
 ```
 
