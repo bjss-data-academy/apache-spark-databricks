@@ -30,7 +30,7 @@ Magic command __md__ causes the text to be rendered following markdown rules:
 - Bullet 2
 ## Heading 2
 [web link](http://example.com)
-![Image link (c) Alamy stock](https://c7.alamy.com/comp/2GAN3YE/pomeranian-eats-a-banana-dog-eating-fruit-on-white-background-pomeranian-elite-isolate-food-2GAN3YE.jpg)
+![Image link - Alamy stock](https://c7.alamy.com/comp/2GAN3YE/pomeranian-eats-a-banana-dog-eating-fruit-on-white-background-pomeranian-elite-isolate-food-2GAN3YE.jpg)
 ```
 
 - Clicking outside notebook for viewed version
