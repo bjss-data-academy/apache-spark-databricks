@@ -26,6 +26,10 @@ Magic command __md__ causes the text to be rendered following markdown rules:
 ```text
 %md
 # Heading 1
+Paragraph 1
+
+Paragraph 2
+
 - Bullet 1
 - Bullet 2
 ## Heading 2
