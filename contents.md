@@ -7,8 +7,12 @@
 ## Working with Notebooks
 - [Using Notebooks](/notebooks.md)
 - Magic commands
-- Exploring files
-- Exploring tables
+- Selecting a Programming language
+- Writing formatted text using markdown
+- Working with the file system
+- Executing shell commands
+- Installing Python libraries
+- Working with Spark SQL
   
 ## Spark DataFrame
 - [DataFrame](/spark-dataframe.md)
