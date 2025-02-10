@@ -53,7 +53,8 @@ Let's select all rows where the player did not go out for a duck (scored at leas
 
 ```python
 runners_df = scores_df.\
-    select("Player", "Score", "Out").where("Score > 0")\
+    select("Player", "Score", "Out")\
+    .where("Score > 0")\
     .orderBy("Score", ascending=False)
 
 display(runners_df)
