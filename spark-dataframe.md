@@ -63,6 +63,9 @@ Which shows:
 
 ![Tabular output of Spark SQL](/images/select-scores-df.png)
 
+The `select` method on dataframe is the entry point to running SQL style methods. `select` will return a new dataframe object, containing rows matching the query. Above, we had a `where` clause to filter out zero scoring rows, and an `orderBy` clause, for results in descending score order.
+
+The methods chain together in a style similar to an SQL query.
 
 ### remaining topics
 input and output
