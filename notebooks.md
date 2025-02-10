@@ -3,12 +3,10 @@ We can use an interactive programming style inside Databricks with _notebooks_.
 
 Databricks Notebooks will be familar to users of Jupyter notebooks.
 
-This guide builds on [Getting Started with Databricks](https://github.com/bjss-data-academy/getting-started-databricks/blob/main/README.md)
-
-If you are not familiar with how notebooks work, review the guide first.
+This guide assumes knowledge of [Getting Started with Databricks](https://github.com/bjss-data-academy/getting-started-databricks/blob/main/README.md)
 
 ## Magic Commands
-Notebooks have _magic commands_ that allow you to override the default language, and to provide some utilities.
+Notebooks support _magic commands_.  These allow you to override the default language, and provide utilities.
 
 A magic command starts with a percent sign __%__
 
