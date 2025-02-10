@@ -85,7 +85,7 @@ Showing the following list of miserable failure, batters who hope to do better i
 
 ![Results of SQL statement](/images/useless-batters.png)
 
-We can also use SQL programmatically:
+We can also use SQL programmatically, using `spark.sql`:
 
 ![SQL statement in Python call](/images/sql-in-python.png)
 
