@@ -46,6 +46,23 @@ We can take a look at the data inside the dataframe by typing `display(scores_df
 
 ![Tabular output of display(scores_df)](/images/display-scores-df.png)
 
+## Using SQL like methods
+SQL we know and love from the relational database world. Dataframes provide familiar SQL-like methods to work with data.
+
+Let's select all rows where the player did not go out for a duck (scored at least one run):
+
+```python
+runners_df = scores_df.\
+    select("Player", "Score", "Out").where("Score > 0")\
+    .orderBy("Score", ascending=False)
+
+display(runners_df)
+```
+
+Which shows:
+
+![Tabular output of Spark SQL](/images/select-scores-df.png)
+
 
 ### remaining topics
 input and output
