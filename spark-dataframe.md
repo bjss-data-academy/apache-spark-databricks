@@ -68,6 +68,30 @@ The `select` method on dataframe is the entry point to running SQL style methods
 
 The methods chain together in a style similar to an [SQL query](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md).
 
+## Using SQL
+We can save our dataframe object as a temporary table, allowing us to run SQL queries against that table.
+
+```python
+scores_df.createOrReplaceTempView("scores")
+```
+
+The `createOrReplaceTempView` method of dataframe makes the table. Then it is a simple matter to run SQL against it in a new notebook. Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
+
+```sql
+select * from scores where score = 0
+```
+
+Showing the following list of miserable failure, batters who hope to do better in future:
+
+![Results of SQL statement](/images/useless-batters.png)
+
+We can also use SQL programmatically:
+
+![SQL statement in Python call](/images/sql-in-python.png)
+
+This can be useful as it allows SQL to be generated inside Python code. 
+
+
 ### remaining topics
 input and output
 - read and write many formats
