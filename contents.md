@@ -26,6 +26,19 @@
 - reading and writing
 - file formats
 
+## Spark SQL
+- [Overview of Spark SQL](/spark-sql.md)
+- Convert Dataframe to temporary view
+- Basic SQL queries
+- Defining a schema
+- Managed versus Unmanaged tables
+- Creating tables with SQL DDL
+- Creating views
+- Metadata: What's inside this database?
+- Reading tables into dataframes
+- Reading CSV into table
+  
+
 ## Delta tables and Parquet files
 - https://delta.io/blog/delta-lake-vs-parquet-comparison/
 - default in databricks
