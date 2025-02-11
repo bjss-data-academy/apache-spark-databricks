@@ -6,7 +6,10 @@
 - sep of concerns SWE
 - unit test transform logic
 
-??consider moving aggregates here??
+- 
+### Column aggregation functions
+- business purpose olap oltp - see overall results
+- parquet by default ??
 
 Complex Data
 
@@ -27,6 +30,7 @@ Working with rows
 - flatten
 - array distinct
 - size array / map
+
 
 Performance
 
