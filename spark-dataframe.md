@@ -90,8 +90,29 @@ Displaying the dataframe shows the new column name:
 
 ![Renamed column as displayed](/images/renamed-column-df.png)
 
-
 ### Add new column
+As we transform our data through the silver layer, it's often useful to add new columns to hold the results of our transforms.
+
+Let's add a column named _best_player_ into our data frame:
+
+```python
+from pyspark.sql.functions import lit
+
+added_column_df = renamed_scores_df.withColumn("best_player", lit(False))
+```
+
+The main work is done by calling method `withColumn` on the original dataframe. This returns a new dataframe object with the added column.
+
+You'll notice two arguments passed in:
+
+- The name of the new column
+- An initial value for that column in each row
+
+In this case, we are initialising the column to the constant boolean value _False_. We do this using Spark's `lit()` function, short for _literal value_. The import in the first line pulls in the `lit` function from its library so we can use it.
+
+Displaying the new dataframe shows the new column:
+
+![Result of adding a new column when displayed](/images/added-column-df.png)
 
 ### Convert data type of column
 -  https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/data_types.html
