@@ -15,9 +15,13 @@ We don't need to see the code inside a DataFrame in order to use it. But it is g
 A dataframe object will manage large amounts of data for us, and provide it in an easy-to-use way. It is optimised to work with data where we want to know soething about entire _columns_ rather than individual rows. 
 
 ### Why optimise for columns?
-An example would be _what is the average spend across all customers?_
+A lot of business-level analysis relates to a single value: total _profit_, average _volume_, shortest _lead time_. These are all aggregate quntities of individual businees facts.
+
+An example queryt a business would like to answer is _what is the average spend across all customers?_
 
 To answer this query, we would be looking at a column of _sold-price_ for each product sold, and then sum the total. The dataframe object makes that sum efficient to perform.
+
+Because many top-level queries aggregate values across all rows in a single column, it makes sense to optimise processing for columns of data.
 
 ## Reading data into a dataframe
 We can read data in several popular formats into a dataframe.
@@ -67,30 +71,6 @@ Which shows:
 The `select` method on dataframe is the entry point to running SQL style methods. `select` will return a new dataframe object, containing rows matching the query. Above, we had a `where` clause to filter out zero scoring rows, and an `orderBy` clause, for results in descending score order.
 
 The methods chain together in a style similar to an [SQL query](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md).
-
-## Using SQL
-We can save our dataframe object as a temporary table, allowing us to run SQL queries against that table.
-
-```python
-scores_df.createOrReplaceTempView("scores")
-```
-
-The `createOrReplaceTempView` method of dataframe makes the table. Then it is a simple matter to run SQL against it in a new notebook. Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
-
-```sql
-select * from scores where score = 0
-```
-
-Showing the following list of miserable failure, batters who hope to do better in future:
-
-![Results of SQL statement](/images/useless-batters.png)
-
-We can also use SQL programmatically, using `spark.sql`:
-
-![SQL statement in Python call](/images/sql-in-python.png)
-
-This can be useful as it allows SQL to be generated inside Python code. 
-
 
 ### remaining topics
 input and output
