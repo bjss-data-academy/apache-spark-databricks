@@ -70,31 +70,45 @@ Which shows:
 
 The `select` method on dataframe is the entry point to running SQL style methods. `select` will return a new dataframe object, containing rows matching the query. Above, we had a `where` clause to filter out zero scoring rows, and an `orderBy` clause, for results in descending score order.
 
-The methods chain together in a style similar to an [SQL query](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md).
+The methods chain together in a style similar to an [SQL query](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md). We'll look at Spark SQL support in the next section, and how this seamlessly works with dataframes.
 
-### remaining topics
+## Working with columns
+Dataframe objects have plenty of ways of transforming data. We'll cover transforming data in more depth in the next section.
+
+For now, let's look at some basic features of working with columns in a dataframe. 
+
+### Rename column
+Changing the name of a column is useful and easy. 
+
+Let's rename the column _Out_ to _bowled_out_.
+
+```python
+renamed_scores_df = scores_df.withColumnRenamed("out", "bowled_out")
+```
+
+Displaying the dataframe shows the new column name:
+
+![Renamed column as displayed](/images/renamed-column-df.png)
+
+
+### Add new column
+
+### Convert data type of column
+-  https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/data_types.html
+
+### Column aggregation functions
+- business purpose olap oltp - see overall results
+- parquet by default ??
+
+
+
+## Writing data from a dataframe
 input and output
 - read and write many formats
 - csv
 - sql - Spark SQL is a thing see link
 - json
 - parquet - columnar datab adds acid, versioning
-
-
-working with data frames
-- load file
-- rename column
-- add new column
-- aggregation
-- business purpose olap oltp - see overall results
-- write file
-- parquet by default ??
-- code examples throughout
-
-  # remaining topics
-- columns and data types
-- supported data types
--  https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/data_types.html
 
 # Next
 [Transforming Data](/transforming-data.md)
