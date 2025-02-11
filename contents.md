@@ -15,7 +15,7 @@
 - Working with Spark SQL
   
 ## Spark DataFrame
-- [DataFrame](/spark-dataframe.md)
+- [Overview of DataFrames](/spark-dataframe.md)
 - Universal abstraction of dataset
 - Optimised for Columns
 - Compatible with Spark SQL
@@ -63,6 +63,7 @@
 - Wide and Narrow transformations
 
 ## Unit testing transformations
+- [What are unit tests?](/spark-unit-testing.md)
 - Arrange: create in-memory dataframes
 - Act: call Python transform function
 - Assert: against expected result
@@ -71,7 +72,7 @@
 - Test-First: Requirements as Code
   
 ## Architecture
-- [Architecture](/architecture.md)
+- [Spark Architecture](/architecture.md)
 - Visualising Spark core architecture
 - Cluster
 - Executor
@@ -81,6 +82,7 @@
 - Job
 
 ## Spark Performance Topics
+-[Getting good performance](/spark-performance.md)
 - Partitioning
 - Skew
 - Shuffle
