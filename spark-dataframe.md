@@ -115,13 +115,27 @@ Displaying the new dataframe shows the new column:
 ![Result of adding a new column when displayed](/images/added-column-df.png)
 
 ### Convert data type of column
--  https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/data_types.html
+Some transformations start with a column in one data type and need it in a different type. A common one is converting a date from a string format "20250207" into a Python date object. Or a numeric value from its string form "1.5" to the number type `1.5`.
 
-### Column aggregation functions
-- business purpose olap oltp - see overall results
-- parquet by default ??
+Converting from one data type to another compatible one is known as _casting_.
 
+We can do this using the `cast` method on a column object. Let's convert the column _bowled_out_ from a Boolean true/false to the string "True" or "False":
 
+```python
+from pyspark.sql.functions import col
+
+from pyspark.sql.types import StringType
+
+text_bowled_out_df = added_column_df.withColumn("bowled_out", \
+                        col("bowled_out").cast(StringType()))
+
+display(text_bowled_out_df)
+```
+Displaying the dataframe, we can hover over the bowled_out column header. It has changed data type to string.The value has been converted into the string representation.
+
+![Dataframe display after cast](/images/cast-column-df.png)
+
+More information on support data types is [here](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/data_types.html)
 
 ## Writing data from a dataframe
 input and output
