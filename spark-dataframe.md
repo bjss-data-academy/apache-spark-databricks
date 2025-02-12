@@ -45,6 +45,19 @@ It's one line of code. Let's break down each piece:
 
 This line returns an instance of a _dataframe_ object that contains the data in the CSV file. We assign that to Python variable `scores_df` for later use.
 
+## Displaying the schema
+Every dataframe has a _schema_, meaning the names and data types for every column.
+
+We can see what the schema is, using the `printSchema()` method on a dataframe:
+
+```python
+scores_df.printSchema()
+```
+
+and we get an output like this:
+
+![Output from print schema method](/images/scores-print-schema.png)
+
 ## Displaying the dataframe content
 We can take a look at the data inside the dataframe by typing `display(scores_df)` in a Python notebook window. We will see a tabular output window showing the data:
 
@@ -143,10 +156,11 @@ Once we're finished processing a dataframe, we can write it out.
 Here's saving our transformed cricket scores dataframe as a CSV file:
 
 ```python
-text_bowled_out_df.write\
-    .option("header", "true")\
-    .csv("/tmp/scores.csv")
+text_bowled_out_df.write.option("header", "true").csv("/tmp/scores.csv")
 ```
+The `.option()` method call ensures a header row gets written in our CSV file. The `csv()` method writes the file to the specified location.
+
+> Ask your system administrator for appropriate file write access
 
 More importantly for our work, here is how we can save the dataframe as a relational table - allowing full use of Spark SQL:
 
@@ -154,7 +168,7 @@ More importantly for our work, here is how we can save the dataframe as a relati
 text_bowled_out_df.write.saveAsTable("cricket_scores")
 ```
 
-> This will need appropriate CREATE permissions - ask your system administrator
+> Ask your system administrator for appropriate create table access
 
 Other formats - for example writing as JSON - are supported.
 
