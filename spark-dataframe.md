@@ -12,12 +12,12 @@ We don't need to see the code inside a DataFrame in order to use it. But it is g
 - _In-memory_ the data resides in system memory, making processing faster
 - _Optimised for Columnar data_ the in-memory data is organised to make operations on whole columns efficient. This matches data lake usage well
 
-A dataframe object will manage large amounts of data for us, and provide it in an easy-to-use way. It is optimised to work with data where we want to know soething about entire _columns_ rather than individual rows. 
+A dataframe object will manage large amounts of data for us, and provide it in an easy-to-use way. It is optimised to work with data where we want to know something about entire _columns_ rather than individual rows. 
 
 ### Why optimise for columns?
-A lot of business-level analysis relates to a single value: total _profit_, average _volume_, shortest _lead time_. These are all aggregate quntities of individual businees facts.
+A lot of business-level analysis relates to a single value: total _profit_, average _volume_, shortest _lead time_. These are all aggregate quntities of individual business facts.
 
-An example queryt a business would like to answer is _what is the average spend across all customers?_
+An example query that a business would like to answer is _what is the average spend across all customers?_
 
 To answer this query, we would be looking at a column of _sold-price_ for each product sold, and then sum the total. The dataframe object makes that sum efficient to perform.
 
@@ -138,12 +138,25 @@ Displaying the dataframe, we can hover over the bowled_out column header. It has
 More information on support data types is [here](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/data_types.html)
 
 ## Writing data from a dataframe
-input and output
-- read and write many formats
-- csv
-- sql - Spark SQL is a thing see link
-- json
-- parquet - columnar datab adds acid, versioning
+Once we're finished processing a dataframe, we can write it out.
+
+Here's saving our transformed cricket scores dataframe as a CSV file:
+
+```python
+text_bowled_out_df.write\
+    .option("header", "true")\
+    .csv("/tmp/scores.csv")
+```
+
+More importantly for our work, here is how we can save the dataframe as a relational table - allowing full use of Spark SQL:
+
+```python
+text_bowled_out_df.write.saveAsTable("cricket_scores")
+```
+
+> This will need appropriate CREATE permissions - ask your system administrator
+
+Other formats - for example writing as JSON - are supported.
 
 # Next
 [Transforming Data](/transforming-data.md)
