@@ -1,5 +1,22 @@
 # Aggregating Data using DataFrames
 
+## Select
+p68
+
+## Sort
+p78
+
+order by
+
+## Filter
+p75
+
+## Distinct
+p76
+
+## Union
+p77
+
 ## Complex data types
 ## Built-in functions
 ## User Defined Functions
