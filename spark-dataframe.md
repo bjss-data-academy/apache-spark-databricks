@@ -184,6 +184,11 @@ Spark gives us the choice using the `mode()` method.
 - `mode("ignore")` leaves the existing data as-is and does not write anything
 - `mode("append")` combines the existing data with the new data
 
+### Output formats
+Using the `.write()` allows different ways to output the data - direct to a table, to a text file, to a CSV file and more.
+
+The full options can be seen at [class DataFrameWriter docs](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.html#pyspark.sql.DataFrameWriter)
+
 # Next
 [Transforming Data](/transforming-data.md)
 
