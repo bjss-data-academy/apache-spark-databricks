@@ -1,7 +1,9 @@
 # Starting with DataFrames
 The core concept in Apache Spark for working with data is the [_Dataframe_](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html#pyspark.sql.DataFrame).
 
-A Dataframe is an [object](https://github.com/bjss-data-academy/python-essentials/blob/main/06-objects.md) that does the heavy lifting of managing and analysing data for us. 
+A Dataframe is a table-like [object](https://github.com/bjss-data-academy/python-essentials/blob/main/06-objects.md) that does the heavy lifting of managing and analysing data for us. 
+
+A dataframe has _rows_, divided into _columns_, each column having a _name_ and a _data type_. The set of column names and data types are known as the _schema_.
 
 We don't need to see the code inside a DataFrame in order to use it. But it is good to know some of the benefits it provides
 
@@ -171,6 +173,16 @@ text_bowled_out_df.write.saveAsTable("cricket_scores")
 > Ask your system administrator for appropriate create table access
 
 Other formats - for example writing as JSON - are supported.
+
+### Writing modes
+When writing data, we need to consider what should happen to any data already written. Should it be deleted? updated? Should we abort the write with an error?
+
+Spark gives us the choice using the `mode()` method.
+
+- `mode("error")` (default) will abort write with an error
+- `mode("overwrite")` replaces the existing data entirely
+- `mode("ignore")` leaves the existing data as-is and does not write anything
+- `mode("append")` combines the existing data with the new data
 
 # Next
 [Transforming Data](/transforming-data.md)
