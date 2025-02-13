@@ -185,7 +185,8 @@ Spark gives us the choice using the `mode()` method.
 - `mode("append")` combines the existing data with the new data
 
 ### Output formats
-Using the `.write()` allows different ways to output the data - direct to a table, to a text file, to a CSV file and more.
+Using the dataframe `.write` property allows different ways to output the data:
+direct to a table, to a text file, to a CSV file and more.
 
 The full options can be seen at [class DataFrameWriter docs](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.html#pyspark.sql.DataFrameWriter)
 
