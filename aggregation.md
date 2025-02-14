@@ -24,9 +24,9 @@ And select the `game` column:
 game_column_df = scores_df.select("game")
 ```
 
-The returned dataframe conatins the value of the `game` column:
+The returned dataframe contains the value of the `game` column:
 
-![New dataframe contents after selecting game column](/images/game-column-dataframe.png)
+![New dataframe contents after selecting game column](/images/game-column-df.png)
 
 ## Filter / Where
 A dataframe can be filtered to contain only rows matching a filter condition.
