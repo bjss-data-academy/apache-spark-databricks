@@ -56,6 +56,23 @@ Giving:
 
 ![Results of limit to one method showing a single result row](/images/limit-1.png)
 
+> Note: limit() imposes no particular order on rows
+
+## Order by
+Filtered rows in a dataframe are _unordered_. We use the `orderBy()` method to impose an ordering on the result set.
+
+We can get our scores in descending order:
+
+```python
+from pyspark.sql.functions import col
+
+scores_highest_first_df = scores_df.orderBy(col("score").desc())
+```
+
+Returning
+
+![All rows in descending order of score](scores-descending.png)
+
 ## Sort
 p78
 
