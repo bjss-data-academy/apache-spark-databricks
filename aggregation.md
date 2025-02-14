@@ -71,7 +71,7 @@ scores_highest_first_df = scores_df.orderBy(col("score").desc())
 
 Returning
 
-![All rows in descending order of score](scores-descending.png)
+![All rows in descending order of score](/images/scores-descending.png)
 
 ## Sort
 p78
