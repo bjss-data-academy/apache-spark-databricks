@@ -93,7 +93,7 @@ unique_titles_df = favourite_books_df.distinct()
 
 Which returns all unique values of column `title`:
 
-![Unique values of title in favourite books dataframe](/images/distinct-titles.png)
+![Unique values of title in favourite books dataframe](/images/unique-titles.png)
 
 ### dropDuplicates()
 See also [dropDuplicates()](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.dropDuplicates.html) for a way to specify which combination of columns needs to be unique.
