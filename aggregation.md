@@ -1,4 +1,7 @@
-# Aggregating Data using DataFrames
+# Transforming Data using DataFrames
+The main task of Spark code is to build our [medallion architecture](https://github.com/bjss-data-academy/data-engineering-fundamentals/blob/main/medallion-architecture.md) and transform raw data into useful business insights.
+
+Spark provides many features and functions to do that, organised around dataframes.
 
 ## Select
 p68
