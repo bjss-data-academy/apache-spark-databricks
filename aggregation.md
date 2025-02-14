@@ -58,8 +58,8 @@ Giving:
 
 > Note: limit() imposes no particular order on rows
 
-## Order by
-Filtered rows in a dataframe are _unordered_. We use the `orderBy()` method to impose an ordering on the result set.
+## OrderBy / Sort
+Filtered rows in a dataframe are _unordered_. We use either of the `orderBy()` or `sort()` methods to impose an ordering on the result set.
 
 We can get our scores in descending order:
 
@@ -73,14 +73,30 @@ Returning
 
 ![All rows in descending order of score](/images/scores-descending.png)
 
-## Sort
-p78
-
-order by
-
-
 ## Distinct
-p76
+Where multiple equal data values exist in a column, we often need to find the set of unique values in there. 
+
+Unique values are returned using `distinct()`:
+
+```python
+favourite_books = [
+  {"title":"Tom the Racer"},
+  {"title":"Java OOP Done Right"},
+  {"title":"Databricks for dummies"},
+  {"title":"Java OOP Done Right"},
+]
+
+favourite_books_df = spark.createDataFrame(favourite_books)
+
+unique_titles_df = favourite_books_df.distinct()
+```
+
+Which returns all unique values of column `title`:
+
+![Unique values of title in favourite books dataframe](/images/distinct-titles.png)
+
+### dropDuplicates()
+See also [dropDuplicates()](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.dropDuplicates.html) for a way to specify which combination of columns needs to be unique.
 
 ## Join
 
