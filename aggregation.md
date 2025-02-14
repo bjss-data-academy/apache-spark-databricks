@@ -4,7 +4,7 @@ The main task of Spark code is to build our [medallion architecture](https://git
 Spark provides many features and functions to do that, organised around dataframes. By design, they resemble SQL commands.
 
 ## Select 
-Like SQL `SELECT..FROM`, the `select()` method on dataframe allows us to choose which columns to work with.
+Like SQL [SELECT..FROM](https://sqlbolt.com/lesson/select_queries_introduction), the `select()` method on dataframe allows us to choose which columns to work with.
 
 Let's start with a dataframe:
 
@@ -43,8 +43,18 @@ Giving:
 
 ![Output of filter by score greater than 120](/images/score-over-120.png)
 
-
 ## Limit
+We often want to return a small number of rows, perhaps for a summary view, or a list of best-matching results. We can do this with the `limit()` method.
+
+Limiting our search for scores over 120 to just one:
+
+```python
+one_over_120_df = scores_df.filter("score > 120").limit(1)
+```
+
+Giving:
+
+![Results of limit to one method showing a single result row](/images/limit-1.png)
 
 ## Sort
 p78
