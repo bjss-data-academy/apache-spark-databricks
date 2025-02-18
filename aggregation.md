@@ -240,9 +240,13 @@ The eagle-eyed will spot that this structure not so much violates third normal f
 Fortunately, if we need to work with this data in more normal columnar form, Apache Spark provides the `explode()` method.
 
 #### Explode an array into separate rows
-Explode will create a separate row for every element in the array. The non-array column values will be duplicated. The array values will be iterated through and placed into the rows.
+Explode will create a separate row for every element in the array. 
 
-It's easier to see it in action.  The code to run `explode()` is this:
+For each new row:
+- Non-array column values will be duplicated
+- array values will be iterated through and placed _individually_ into the rows
+
+It's easier to see it in action. The code to run `explode()` is this:
 
 ```python
 from pyspark.sql.functions import explode, col
