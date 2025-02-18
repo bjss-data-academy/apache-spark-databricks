@@ -99,6 +99,53 @@ Which returns all unique values of column `title`:
 See also [dropDuplicates()](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.dropDuplicates.html) for a way to specify which combination of columns needs to be unique.
 
 ## Join
+Generally, we want to be combining data from multiple tables in our silver layer processing. The `.join()` method allows us to combine dataframes.
+
+We'll start with two related tables. Scores once again holds the score information for a number of players. Contacts holds email contact details for players:
+
+```python
+scores = [
+  {"player":"Alan",  "game":"galaga", "score":14950},
+  {"player":"Dan",   "game":"cricket", "score":110},
+  {"player":"Rosie", "game":"snooker", "score":147},
+]
+
+scores_df = spark.createDataFrame(scores)
+
+contacts = [
+    {"player":"Dan",   "email":"dan@example.com"},
+    {"player":"Rosie", "email":"rosie@example.com"},
+    {"player":"Alan",  "email":"alan@example.com"},
+]
+```
+
+We can join the two together on the player column. This relates data from each table that corresponds to the same player:
+
+```python
+contacts_df = spark.createDataFrame(contacts)
+
+scores_contacts_df = scores_df.join(contacts_df, "player")
+display(scores_contacts_df)
+```
+
+Giving us an output:
+
+![Output of scores and contacts datarames joined together](/images/joined-df.png)
+
+We can filter and select columns as we need. Here is a query that will return the email address of the highest scoring player:
+
+```python
+winner_email = scores_df.join(contacts_df, "player")\
+    .select("email")\
+    .orderBy(col("score").desc())\
+    .limit(1)
+
+display(winner_email)
+```
+
+giving
+
+![Finding email of highest scoring player](/images/winner-email.png)
 
 ## Union
 p77
