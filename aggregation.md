@@ -148,7 +148,29 @@ giving
 ![Finding email of highest scoring player](/images/winner-email.png)
 
 ## Union
-p77
+Dataframes are _immutable_. Once we have a dataframe, that's it: we can't add or remove rows.
+
+This is a bit of a blow sometimes, as we often want to add rows.
+
+We can do this with `.union()`:
+
+```python
+more_scores = [
+    {"player":"Sue",  "game":"galaga", "score": 22950},
+    {"player":"Dave", "game":"scramble", "score": 9950}
+]
+
+more_scores_df = spark.createDataFrame(more_scores)
+
+updated_scores_df = scores_df.union(more_scores_df)
+display(updated_scores_df)
+```
+
+> Union requires the same column schema in both dataframes to work
+
+Provided we have the same schema - same columns, same types - in both dataframes, `union()` will create a new dataframe combining the rows:
+
+![Output of union of scores dataframe with another dataframe of additional scores](/images/union.png)
 
 ## Complex data types
 ## Built-in functions
