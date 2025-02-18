@@ -101,7 +101,7 @@ See also [dropDuplicates()](https://spark.apache.org/docs/latest/api/python/refe
 ## Join
 Generally, we want to be combining data from multiple tables in our silver layer processing. The `.join()` method allows us to combine dataframes.
 
-We'll start with two related tables. Scores once again holds the score information for a number of players. Contacts holds email contact details for players:
+We'll start with two related tables. `scores_df` once again holds the score information for a number of players. Additional reference table `contacts_df` holds email contact details for players:
 
 ```python
 scores = [
