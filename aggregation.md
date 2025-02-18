@@ -173,6 +173,99 @@ Provided we have the same schema - same columns, same types - in both dataframes
 ![Output of union of scores dataframe with another dataframe of additional scores](/images/union.png)
 
 ## Complex data types
+So far, we have considered our data to be primitive types: things like strings, boolean or numbers. 
+
+A lot of real-world data is interconnected. We don't have a single piece of information to describe a customer. We have several, related pieces. We wantto work with this data as a whole chunk, to match our concept of what that data represents.
+
+There are several ways to do this, depending on the situation.
+
+### Struct
+Think about describing a _customer_ in a typical system.
+
+There is plenty of information here. We might have a combination of name fields, date of birth, credit limit, preferred pronouns and often more.
+
+We want to treat this data as a single chunk, so that it maps to our single concept of customer. 
+
+In spark, we can define a `StructType`. This groups seperate named pieces of data of different data types.
+
+Recall our scores data type = a list of python dictionaries:
+
+```python
+scores = [
+  {"player":"Alan",  "game":"galaga", "score":14950},
+  {"player":"Dan",   "game":"cricket", "score":110},
+  {"player":"Rosie", "game":"snooker", "score":147},
+]
+```
+
+We can define the structure of our scores data type using Spark's `StructType` and `StructField` objects:
+
+```python
+scores_struct = StructType([ \
+  StructField("player", StringType, True),`
+  StructField("game", StringType(), True),`
+  StructField("score", IntegerType(), True),`
+])
+```
+
+We see here that our `scores_struct` requires three fields `player`, `game` and `score`. Fields `player` and `game` are both of type string. Field `score` is of integer type, so must be used to hold integer values only. All three fields are `required = True` meaning they _must_ be present.
+
+> Struct types are often known as a _schema_
+
+Struct types easily convert to JSON data formats. 
+
+### Array
+In other cases, we don't have an internal structure of data. We just have _many_ of the _same thing_. 
+
+This is recognisable as an _array_ of values, which idiomatic Python calls a _list_.
+
+Apache Spark supports lists of values using `ArrayType`.
+
+Here is some data relating game scores to players. But it's in a different format. This time, we have an entry for a single player playing a single game, but with a list of their scores achieved:
+
+![Data featuring a list of integer games scores in a single row per player](/images/scored-games-list.png)
+
+We can define a struct type as before, but define the `scores` field to be an `ArrayType`:
+
+```python
+scores_struct = StructType([ \
+  StructField("player", StringType, True),`
+  StructField("game", StringType(), True),`
+  StructField("scores", ArrayType(), True),`
+])
+```
+
+The eagle-eyed will spot that this structure not so much violates third normal form as runs a steam-roller over it, filling in the remains with asphalt.
+
+Fortunately, if we need to work with this data in more normal columnar form, Apache Spark provides the `explode()` method.
+
+#### Explode an array into separate rows
+Explode will create a separate row for every element in the array. The non-array column values will be duplicated. The array values will be iterated through and placed into the rows.
+
+It's easier to see it in action.  The code to run `explode()` is this:
+
+```python
+from pyspark.sql.functions import explode, col
+
+scored_games_df = spark.createDataFrame(scored_games)
+
+scores_per_play_df = scored_games_df.select(
+    "player",
+    "game",
+    explode(col("scores")).alias("individual_game_score")
+)
+
+display(scores_per_play_df)
+```
+
+See how there are new rows in the table, each one with a new column holding score for an individual game. We have named this new column `individual_game_score`:
+
+
+![Results of explode on data with array values](/images/explode.png)
+
+
+
+### Map
 ## Built-in functions
 ## User Defined Functions
 ## Performance ranking
