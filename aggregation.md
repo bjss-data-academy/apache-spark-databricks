@@ -318,6 +318,49 @@ We can see a sequence of methods to call:
 Using the above groupBy and pivot, we get one row per-game per-player.
 
 ### Map
+There's some truth in the saying that 
+
+> if the only tool you have is Python, every problem looks like a dictionary
+
+(even though I just made it up).
+
+Python has very convenient support for the dictionary data type, allowing us to create key-value pairs easily. 
+
+key-value data is oftenm used for _lookup tables_, and these appear frequently as reference data.
+
+Spark can work with columns that are dictionaries. Again, the eagle-eyed will spot this is the exact opposite of third normal form, but alas, real data often do be that way. Sometimes for good reason; sometimes not.
+
+Here is a dataframe using a dictionary to store facts about each of our players:
+
+```python
+player_reference = [
+    {"player": "Alan", "facts":{"hobby":"watching paint dry", "vegan": False}},
+    {"player": "Dan", "facts":{"hobby":"painting dry watches", "vegan": True}},
+    {"player": "Rosie", "facts":{"hobby":"drying watch paint", "vegan": False}},
+]
+
+player_reference_df = spark.createDataFrame(player_reference)
+
+display(player_reference_df)
+```
+
+![Dataframe with a map type column of facts](/images/map-column.png)
+
+### Explode map values into separate rows
+We can use `explode` to separate out each key-value pair into a row of its own:
+
+```python
+from pyspark.sql.functions import col, explode; 
+
+separate_facts_df = player_reference_df.select("player", explode(col("facts")))
+
+display(separate_facts_df)
+```
+
+Resulting in the following new rows:
+
+![New rows created one per map-value](/images/map-explode.png)
+
 ## Built-in functions
 ## User Defined Functions
 ## Performance ranking
