@@ -239,7 +239,7 @@ The eagle-eyed will spot that this structure not so much violates third normal f
 
 Fortunately, if we need to work with this data in more normal columnar form, Apache Spark provides the `explode()` method.
 
-#### Explode an array into separate rows
+### Explode an array into separate rows
 Explode will create a separate row for every element in the array. 
 
 For each new row:
@@ -267,7 +267,53 @@ See how there are new rows in the table, each one with a new column holding scor
 
 ![Results of explode on data with array values](/images/explode.png)
 
+### Pivot rows to columns
+Think of some rows of data where one column has different values. It can be useful to combine them into a single row with multiple columns, one column for each of the values.
 
+In our scores example, we have a column `game`. This stores the game that was played to get the scores.
+
+We can convert rows with different games into columns using `pivot`.
+
+Let's set up some rows of player scores for a number of games:
+
+```python
+scored_games = [
+    {"player":"Alan", "game":"scramble", "score": 99950 },
+    {"player":"Alan", "game":"scramble", "score": 1050 },
+    {"player":"Alan", "game":"scramble", "score": 50 },
+    {"player":"Alan", "game":"scramble", "score": 0 },
+    {"player":"Rosie","game":"scrabble", "score": 131},
+    {"player":"Rosie","game":"scrabble", "score": 99},
+    {"player":"Rosie","game":"scrabble", "score": 131},
+    {"player":"Rosie","game":"scramble", "score": 78},
+    {"player":"Rosie","game":"duck hunt", "score": 12},
+]
+
+scored_games_df = spark.createDataFrame(scored_games)
+```
+
+Now we can use `.pivot()` to combine total scores for games into a column for that game:
+
+```python
+game_columns_df = scored_games_df\
+    .groupBy("player", "game")\
+    .pivot("game")\
+    .sum("score")
+
+score_summary_df = game_columns_df.select("player", "duck hunt", "scrabble", "scramble")
+```
+
+Giving us this resulting dataframe:
+
+![Output of pivot on game column, to show total scores per game in one row per game](/images/pivot.png)
+
+We can see a sequence of methods to call:
+
+- `groupBy`to create a grouped data object we can apply `pivot` to
+- `pivot` specifying the column to convert row values to new columns
+- an _aggregate method_ used to populate the value for the new column
+
+Using the above groupBy and pivot, we get one row per-game per-player.
 
 ### Map
 ## Built-in functions
