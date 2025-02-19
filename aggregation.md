@@ -307,6 +307,8 @@ Giving us this resulting dataframe:
 
 ![Output of pivot on game column, to show total scores per game in one row per game](/images/pivot.png)
 
+> There is one new column for every distinct value in the `game` column
+
 We can see a sequence of methods to call:
 
 - `groupBy`to create a grouped data object we can apply `pivot` to
