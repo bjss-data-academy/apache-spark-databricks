@@ -1,9 +1,9 @@
 # Transforming Data using DataFrames
 The main task of Spark code is to build our [medallion architecture](https://github.com/bjss-data-academy/data-engineering-fundamentals/blob/main/medallion-architecture.md) and transform raw data into useful business insights.
 
-Most of the heavy lifting is done in the silver layer - where we combine, augment and transform raw data into its final analytic form:
+Spark transform methods see most use in the solver and gold layers, as we augment our data and create the top-level business aggregates that give insights:
 
-![medallion architecture with silver layer emphasised](/images/medallion-silver-emphasised.png)
+![medallion architecture with silver and gold layers emphasised](/images/medallion-silver-gold-emphasised.png)
 
 Spark provides many features and functions to do that, organised around dataframes. By design, they resemble SQL commands.
 
