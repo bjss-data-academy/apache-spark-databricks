@@ -16,29 +16,37 @@
   
 ## Spark DataFrame
 - [Overview of DataFrames](/spark-dataframe.md)
-- Universal abstraction of dataset
-- Optimised for Columns
-- Compatible with Spark SQL
-- Rename column
-- Add column
-- Supported data types
-- Casting between data types
-- reading and writing
-- file formats
+- Benefits of dataframes
+- Reading data into a dataframe
+- Displaying the data schema
+- Displaying dataframe content
+- Using SQL-like methods
+- Working with columns
+- Writing data from a dataframe
 
 ## Transforming data using DataFrames
 - [Aggregating Data](/aggregation.md)
+- Medallion architecture
+- Select
+- Filter/Where
+- Limit
+- OrderBy/Sort
+- Distinct
+- Join
+- Union
 - Complex data types
-- Built-in functions
-- User Defined Functions
-- Performance ranking
-- How Spark executes functions
-- collect_set
-- collect_list
-- array_distinct
-- pivot
-- explode
-
+- Struct
+- Dot notation
+- Array
+- Explode array to rows
+- Pivot rows to columns
+- Map
+- Explode map to rows
+- Collect_list
+- Collect_set
+- Array_distinct
+- Flatten
+  
 ## Spark SQL
 - [Overview of Spark SQL](/spark-sql.md)
 - Convert Dataframe to temporary view
