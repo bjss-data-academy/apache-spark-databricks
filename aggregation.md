@@ -361,20 +361,53 @@ Resulting in the following new rows:
 
 ![New rows created one per map-value](/images/map-explode.png)
 
+## Combining rows
+We can combine multiple rows into single rows using `collect_set` and `collect_list` methods. This is often useful after a `groupBy`, or after using some window partitioning.
+
+### collect_list
+Specify a column. All values in that column will be combined into an array. This is complementary to `explode` earlier.
+
+Using our player data from before:
+
+```python
+from pyspark.sql.functions import collect_list
+
+scored_games = [
+    {"player":"Alan", "game":"scramble", "score": 99950 },
+    {"player":"Alan", "game":"scramble", "score": 1050 },
+    {"player":"Alan", "game":"scramble", "score": 50 },
+    {"player":"Alan", "game":"scramble", "score": 0 },
+    {"player":"Rosie","game":"scrabble", "score": 131},
+    {"player":"Rosie","game":"scrabble", "score": 99},
+    {"player":"Rosie","game":"scrabble", "score": 131},
+    {"player":"Rosie","game":"scramble", "score": 78},
+    {"player":"Rosie","game":"duck hunt", "score": 12},
+]
+
+scored_games_df = spark.createDataFrame(scored_games)
+
+combined_scores_df = scored_games_df.groupBy("player", "game")\
+    .agg(collect_list("score").alias("all_scores"))
+
+display(combined_scores_df)
+```
+
+We see fewer rows. Scores for individual games have been combined into an array. The array is stored in a column named `all_scores`, using the `alias` method:
+
+![Results of collect_list gathering player scores per game into an array](/examples/collect-list.png)
+
+
+vvvv TODO vvvv
+collect_set
+
+array_distinct
+
+
+
 ## Built-in functions
 ## User Defined Functions
 ## Performance ranking
 ## How Spark executes functions
-
-## Grouping rows
-collect_set
-collect_list
-array_distinct
-
-## Splitting rows
-pivot
-explode
-
 ## Wide and Narrow transformations
 p19
 
