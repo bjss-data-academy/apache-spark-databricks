@@ -26,28 +26,6 @@
 - reading and writing
 - file formats
 
-## Spark SQL
-- [Overview of Spark SQL](/spark-sql.md)
-- Convert Dataframe to temporary view
-- Basic SQL queries
-- Defining a schema
-- Managed versus Unmanaged tables
-- Creating tables with SQL DDL
-- Creating views
-- Metadata: What's inside this database?
-- Reading tables into dataframes
-- Reading CSV into table
-  
-
-## Delta tables and Parquet files
-- https://delta.io/blog/delta-lake-vs-parquet-comparison/
-- default in databricks
-- ACID
-- Time Travel / versioning
-- Audit hostory
-- Builds on Parquet format
-- Compatible with Spark API incl Spark SQL
-
 ## Transforming data using DataFrames
 - [Aggregating Data](/aggregation.md)
 - Complex data types
@@ -60,7 +38,18 @@
 - array_distinct
 - pivot
 - explode
-- Wide and Narrow transformations
+
+## Spark SQL
+- [Overview of Spark SQL](/spark-sql.md)
+- Convert Dataframe to temporary view
+- Basic SQL queries
+- Defining a schema
+- Managed versus Unmanaged tables
+- Creating tables with SQL DDL
+- Creating views
+- Metadata: What's inside this database?
+- Reading tables into dataframes
+- Reading CSV into table
 
 ## Unit testing transformations
 - [What are unit tests?](/spark-unit-testing.md)
@@ -70,6 +59,15 @@
 - FIRST Tests
 - Component tests
 - Test-First: Requirements as Code
+  
+## Delta tables and Parquet files
+- https://delta.io/blog/delta-lake-vs-parquet-comparison/
+- default in databricks
+- ACID
+- Time Travel / versioning
+- Audit hostory
+- Builds on Parquet format
+- Compatible with Spark API incl Spark SQL
   
 ## Architecture
 - [Spark Architecture](/architecture.md)
@@ -83,6 +81,9 @@
 
 ## Spark Performance Topics
 -[Getting good performance](/spark-performance.md)
+
+- Wide and Narrow transformations
+- 
 - Partitioning
 - Skew
 - Shuffle
