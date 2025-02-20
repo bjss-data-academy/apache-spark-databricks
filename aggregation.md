@@ -422,24 +422,30 @@ We create a new column `games_played` holding an array of games:
 
 ![Results of collect_set to combine games played into one array column](/images/collect-set.png)
 
+### array_distinct
+Closely related to `collect_set` in terms of function is `array_distinct`. 
 
-vvvv TODO vvvv
+Again, this is a way to _de-dupe_ - remove duplicate values from - an array of data.
 
-array_distinct
+We can get a list of all the different games played in our dataset using `array_distinct`:
 
+```python
+from pyspark.sql.functions import array_distinct, collect_list
 
+games_played_df = scored_games_df.agg(array_distinct(collect_list("game")).alias("games_played"))
 
-## Built-in functions
-## User Defined Functions
-## Performance ranking
-## How Spark executes functions
-## Wide and Narrow transformations
-p19
+display(games_played_df)
+```
 
-## Lazy evaluation
-p19
+This returns a dataframe with a single column containing all the games found in the data:
+
+![Column with array of all distinct games](/images/array-distinct.png)
+
+### flatten
+`flatten()` combines the values from multiple separate arrays into a single array.
 
 # Labs
+TODO
 
 # Next
 [Back to Contents](/contents.md)
