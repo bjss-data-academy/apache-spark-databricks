@@ -202,13 +202,13 @@ scores = [
 ]
 ```
 
-We can define the structure of our scores data type using Spark's `StructType` and `StructField` objects:
+We can define a struct to represent a custom data type that exactly holds _those_ fields with _those_ data types:
 
 ```python
-scores_struct = StructType([ \
-  StructField("player", StringType, True),`
-  StructField("game", StringType(), True),`
-  StructField("score", IntegerType(), True),`
+scores_struct = StructType([
+  StructField("player", StringType(), True),
+  StructField("game", StringType(), True),
+  StructField("score", IntegerType(), True),
 ])
 ```
 
@@ -217,6 +217,57 @@ We see here that our `scores_struct` requires three fields `player`, `game` and 
 > Struct types are often known as a _schema_
 
 Struct types easily convert to JSON data formats. 
+
+### Navigating struct columns
+Dataframe columns can hold a struct. And that struct itself can hold other structs, giving us _nested data_.
+
+Spark allows us to navigate around individual data items in those structs.
+
+Let's take the example struct above and modify ot slightly. We will create a dataframe that has two columns - the `player` name, and a `results` column. This `results` column will hold a struct containing the `game` played and the `score` obtained:
+
+```python
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+
+scores = [
+  {"player":"Alan",  "results":{"game":"galaga", "score":14950}},
+  {"player":"Rosie", "results":{"game":"snooker", "score":147}},
+]
+
+game_score_pair = StructType([
+  StructField("game", StringType(), True),
+  StructField("score", IntegerType(), True),
+])
+
+scores_struct = StructType([
+  StructField("player", StringType(), True),
+  StructField("results", game_score_pair, True),
+])
+
+scores_df = spark.createDataFrame(scores, schema=scores_struct)
+
+display(scores_df)
+```
+
+This gives us nested data - column `results` contains a struct with fields `game` and `score`:
+
+![Nested data - results column contains struct](/images/nested-struct.png)
+
+We can use the _dot notation_ in our queries to navigate this nested struct:
+
+```python
+from pyspark.sql.functions import col
+
+galaga_scores_df = scores_df.filter(col("results.game") == "snooker")\
+    .select("player", "results.score")
+
+display(galaga_scores_df)
+```
+
+The above query shows us all the players who scored for snooker. Note the _dot notation_ in `results.game` and 'results.score`, allowing us to _reach inside_ the struct. 
+
+The output is a list of matching rows, in the usual manner:
+
+![Output of rows selected using dot notation in the query](/images/struct-query.png)
 
 ### Array
 In other cases, we don't have an internal structure of data. We just have _many_ of the _same thing_. 
