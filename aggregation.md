@@ -396,9 +396,30 @@ We see fewer rows. Scores for individual games have been combined into an array.
 
 ![Results of collect_list gathering player scores per game into an array](/examples/collect-list.png)
 
+### collect_set
+We don't awlays want to combine _all_ the data values into an array. Sometimes, we want only _distinct_ values.
+
+Method `collect_set` does this for us.
+
+In our player scores example, `collect_set` could be used to create an array column with all the games player by a player.
+
+Using the same `scored_games_df` as before:
+
+```python
+from pyspark.sql.functions import collect_set
+
+player_games_df = scored_games_df.groupBy("player")\
+    .agg(collect_set("game").alias("games_played"))
+
+display(player_games_df)
+```
+
+We create a new column `games_played` holding an array of games:
+
+![Results of collect_set to combine games played into one array column](/images/collect-set.png)
+
 
 vvvv TODO vvvv
-collect_set
 
 array_distinct
 
