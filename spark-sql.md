@@ -128,7 +128,7 @@ SELECT player, max(score) FROM exploded_results WHERE game = 'scramble' GROUP BY
 
 which gives a much more straightforward result:
 
-![Results of complex query](/examples/complex-query.png)
+![Results of complex query](/images/complex-query.png)
 
 While contrived, this _could_ appear in real-life following ingestion of JSON structured data provided by a REST or GraphQL API. 
 
