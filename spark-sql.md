@@ -27,7 +27,7 @@ scores_df.createOrReplaceTempView("scores")
 The `createOrReplaceTempView` method of dataframe makes the table. Then it is a simple matter to run SQL against it in a new notebook. Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
 
 ```sql
-select * from scores where score = 0
+select * from scores where score = 0 and out = 'Yes'
 ```
 
 Showing the following list of miserable failure, batters who hope to do better in future:
@@ -37,17 +37,96 @@ Showing the following list of miserable failure, batters who hope to do better i
 ## Basic SQL queries
 Once we have a table or view, all the usual SQL basics apply. 
 
-Fr more information, see [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md) and [Fundamentals of SQL](https://github.com/bjssacademy/fundamentals-sql/tree/main)
-
+For more information, see [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md) and [Fundamentals of SQL](https://github.com/bjssacademy/fundamentals-sql/tree/main)
 
 ![SQL statement in Python call](/images/sql-in-python.png)
 
 This can be useful as it allows SQL to be generated inside Python code. 
 
-## Creating tables with SQL DDL
-We can use standard SQL DDL (Data Definition Lnaguage) to create tables:
+## Spark extensions to SQL
+Spark adds some new features to SQL:
 
-TODO TODO TODO
+- New column types STRUCT, ARRAY, MAP, JSON
+- Dot notation to access STRUCT fields
+- Colon notation to access MAP fields
+
+For more information, see [Databricks Spark SQL reference](https://docs.databricks.com/aws/en/sql/language-manual/)
+
+## Creating tables with SQL DDL
+We can use SQL DDL (Data Definition Lnaguage) to create tables:
+
+```sql
+USE `2870560854981942`.`spark-training`;
+
+CREATE TABLE `spark-training`.scores (player STRING, game STRING, score INTEGER);
+```
+
+insert rows:
+
+```sql
+INSERT INTO `spark-training`.scores VALUES ('Alan', 'scramble', 10000);
+INSERT INTO `spark-training`.scores VALUES ('Rosie', 'tiddlywinks', 15);
+```
+
+and execute queries:
+
+```sql
+SELECT * FROM `spark-training`.scores ORDER BY score DESC;
+```
+
+### Spark DDL extensions
+Spark extends the DDL syntax to allow us to create, populate and query tables using complex data types.
+
+Here is a more complex - and highly contrived - example. Create and populate a table with a column holding a map of arrays of struct:
+
+```sql
+CREATE TABLE IF NOT EXISTS `spark-training`.examples (
+  player STRING, 
+  game_history MAP<STRING, ARRAY<STRUCT<date STRING, score INTEGER>>>
+);
+
+INSERT INTO `spark-training`.examples VALUES (
+  "Alan", 
+  MAP("scramble", ARRAY(
+    STRUCT("2022-01-01", 9950), 
+    STRUCT("2025-02-21", 119500)
+  ))
+);
+```
+
+This gives us a table with a complex data type for the `game_history` column:
+
+![Output of rows in our complex schema](/images/complex-create.png)
+
+We can run the following Spark SQL query to find the highest score achieved by all Scramble game players:
+
+```sql
+WITH exploded_game_history AS (
+  SELECT 
+    player, 
+    game, 
+    results
+  FROM 
+    `spark-training`.examples 
+    LATERAL VIEW explode(game_history) AS game, results
+),
+exploded_results AS (
+  SELECT
+    player,
+    game,
+    result.date,
+    result.score
+  FROM 
+    exploded_game_history
+    LATERAL VIEW explode(results) AS result
+)
+
+SELECT player, max(score) FROM exploded_results WHERE game = 'scramble' GROUP BY player;
+```
+
+which gives a much more straightforward result:
+
+![Results of complex query](/examples/complex-query.png)
 
 ## CTAS - Create Table As Select
 TODO TODO TODO
