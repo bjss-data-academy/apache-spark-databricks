@@ -61,7 +61,7 @@ USE `2870560854981942`.`spark-training`;
 CREATE TABLE `spark-training`.scores (player STRING, game STRING, score INTEGER);
 ```
 
-insert rows:
+We can then use standard SQL DML (Data Manipulation Language) to insert rows:
 
 ```sql
 INSERT INTO `spark-training`.scores VALUES ('Alan', 'scramble', 10000);
@@ -75,9 +75,11 @@ SELECT * FROM `spark-training`.scores ORDER BY score DESC;
 ```
 
 ### Spark DDL extensions
-Spark extends the DDL syntax to allow us to create, populate and query tables using complex data types.
+Spark _extends DDL_ syntax to allow us to create, populate and query tables using complex data types.
 
-Here is a more complex - and highly contrived - example. Create and populate a table with a column holding a map of arrays of struct:
+Here is a more complex - and highly contrived - example. 
+
+Let's create and populate a table with a column holding a map of arrays of struct:
 
 ```sql
 CREATE TABLE IF NOT EXISTS `spark-training`.examples (
@@ -127,6 +129,10 @@ SELECT player, max(score) FROM exploded_results WHERE game = 'scramble' GROUP BY
 which gives a much more straightforward result:
 
 ![Results of complex query](/examples/complex-query.png)
+
+While contrived, this _could_ appear in real-life following ingestion of JSON structured data provided by a REST or GraphQL API. 
+
+Our silver layer processing would want to work with that nested data to simplify access. Simplified results would populate the Gold layer tables.
 
 ## CTAS - Create Table As Select
 TODO TODO TODO
