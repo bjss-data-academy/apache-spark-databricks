@@ -1,36 +1,83 @@
 # Using Spark SQL
-Databricks allows us to use Spark with any supported programming language. 
+Databricks provides an enhanced SQL syntax that works with tables and views. This superset of SQL - Spark SQL - includes Databricks extended features, such as support for complex data types in columns and managed tables.
 
-At the time of writing, these are:
+## Tables in Databricks
+Databricks offers two levels of support for tables - _managed_ tables or _external_ tables.
 
-- Python
-- SQL
-- R
-- Scala
-- Java
+### Managed Tables
+Stored data and table metadata are fully controlled by databricks.
 
-The most popular in Data Engineering at BJSS are Python and SQL.
+Once a table has been created, Databricks fully manages storage and update of that data. Removing the table causes all the data to be deleted.
 
-The point to note is that the _same functionality_ can be achieved from _any_ language. Anything we can do with a dataframe in Python can be done in SQL.
+### External Tables
+Data lives in external systems, such as Amazon Web Services or on-prem data stores. This allows Databrocks to integrate with third-party data sources.
 
+Databricks will manage metadata only for these tables. the actual data itself is left to the external service. 
+
+If the table is removed, the metadata is removed - but the actual data remains on the external service.
+
+This can be a benefit or a problem, depending on use case.
+
+### Table data formats
+Tables now default to _Delta Table_ format in Databricks, providing the benefits of ACID transactions, scalability, time-travel and performance enhancements such as caching.
+
+Other formats are supported, such as plain Parquet format, or Hadoop Hive format. These formats do not offer the benefits above.
+
+For our purposes, Delta tables are preferred.
+
+## Working with Spark SQL
 SQL only works on tables and views. To use SQL with a dataframe, we must first convert it to a table or a view.
 
-## Convert dataframe to temporary view
-We can save our dataframe object as a temporary view, allowing us to run SQL queries against it.
+### Creating an empty table
+This follows standard ANSI SQL DDL syntax, with the ability to work with complex data types.
 
-This is a single method call on the dataframe you want to convert:
+A simple example of creating a basic `User` table is:
+
+```sql
+CREATE TABLE User (
+    id BIGINT,
+    name STRING,
+    email_address STRING,
+    bio STRING
+)
+```
+
+> This creates the table `User` as a _managed_ table, using Delta format.
+
+Rows can be inserted in the normal way:
+
+```sql
+INSERT INTO User VALUES (1, "Alan", "al@example.com", "Author Java OOP Done Right, Test-Driven Deveopment in Java. Co-author Nokia Bounce, Fun School 2, Red Arrows")
+```
+
+### Create an external table
+If our user data was stored outside Databricks, we could access it as an _external table_.
+
+The syntax to create external tables uses the `LOCATION` keyword, to specify where the data is stored:
+
+```sql
+CREATE TABLE external_user
+LOCATION '/mnt/external_storage/external_user/';
+```
+
+### Convert dataframe to temporary view
+It is often useful to work with dataframe objects using SQL. To do this, we must either save the dataframe as a table, or convert it to a temporary view.
+
+Converting to a temporary view is a single method call on the dataframe you want to convert:
 
 ```python
 scores_df.createOrReplaceTempView("scores")
 ```
 
-The `createOrReplaceTempView` method of dataframe makes the table. Then it is a simple matter to run SQL against it in a new notebook. Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
+The `createOrReplaceTempView` method of dataframe makes an in-memory SQL view. It is a simple matter to run SQL against it in a new notebook. 
+
+Assuming our dataframe is our `scores-df` from earlier, let's find the (_rather poor - ed_) players who were out for a duck (no runs):
 
 ```sql
 select * from scores where score = 0 and out = 'Yes'
 ```
 
-Showing the following list of miserable failure, batters who hope to do better in future:
+Showing the following list of miserable failures, batters who hope to do better in future:
 
 ![Results of SQL statement](/images/useless-batters.png)
 
