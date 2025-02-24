@@ -28,6 +28,10 @@ For our purposes, Delta tables are preferred.
 ## Working with Spark SQL
 SQL only works on tables and views. To use SQL with a dataframe, we must first convert it to a table or a view.
 
+TODO
+TODO - repetition to remove, rearrange to use scored_df as running example - clarify text and floe
+TODO
+
 ### Creating an empty table
 This follows standard ANSI SQL DDL syntax, with the ability to work with complex data types.
 
