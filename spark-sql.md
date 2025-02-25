@@ -59,7 +59,7 @@ Delta tables are a Databricks data storage format that builds on the open-source
 
 The secret sauce is to add a _transaction log_ to the raw parquet file storage:
 
-![Delta table showing parquet file data rows with column metadata plus three entries in a transaction log](/images/delta-tables-internals.png)
+![Delta table showing parquet file data rows with column metadata plus three entries in a transaction log](/images/delta-table-internals.png)
 
 > Delta tables are the preferred format in Databricks
 
