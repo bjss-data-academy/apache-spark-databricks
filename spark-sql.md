@@ -1,24 +1,52 @@
 # Using Spark SQL
+We can use familiar SQL statements in Databricks, aloowing us to work with relational data in the form of tables and views. 
+
+Spark SQL extends ANSI SQL syntax to cover Databricks specific features. These include support for complex data types in columns and the concept of managed tables.
+
 Databricks provides an enhanced SQL syntax that works with tables and views. This superset of SQL - Spark SQL - includes Databricks extended features, such as support for complex data types in columns and managed tables.
 
-## Tables in Databricks
+## Managed and External tables in Databricks
 Databricks offers two levels of support for tables - _managed_ tables or _external_ tables.
 
-### Managed Tables
-Stored data and table metadata are fully controlled by databricks.
+Tables in Databricks are made up of data plus table metadata:
 
-Once a table has been created, Databricks fully manages storage and update of that data. Removing the table causes all the data to be deleted.
+- Data is the actual values inside rows and columns
+- Metadata is information about how and where that data is stored
+
+Databricks manages the metadata for both types. It has to really - Databricks needs to know about the data it is dealing with.
+
+The difference between the two types lies in how and where the data is managed.
+
+### Managed Tables
+
+- Databricks controls metadata
+- Databricks controls data
+  
+In a managed table, Databricks fully controls the data that is stored inside the table along with metadata. It decides where the data is stored. It decides how best to work with that data.
+
+> DROP TABLE deletes the metadata and the data. Data is permanently gone.
 
 ### External Tables
-Data lives in external systems, such as Amazon Web Services or on-prem data stores. This allows Databrocks to integrate with third-party data sources.
 
-Databricks will manage metadata only for these tables. the actual data itself is left to the external service. 
+- Databricks stores and controls metadata
+- External systems store and control data
+- Daatbricks has no control over the external data, only access to it
 
-If the table is removed, the metadata is removed - but the actual data remains on the external service.
+With an external table, Databricks still holds metadata information about where that data is held and how to acces it. But that's all.
 
-This can be a benefit or a problem, depending on use case.
+The data itself is fully managed outside of databricks. 
+
+Examples of such external storage include cloud storage and on-premise database products.
+
+> DROP TABLE deletes the metadata only. External data is _unaffected_
+
+If we drop an external table in databricks, the external data is unaffected. Only Databricks metadata is removed.
+
+> We can restore external data
 
 ### Table data formats
+TODO start back
+
 Tables now default to _Delta Table_ format in Databricks, providing the benefits of ACID transactions, scalability, time-travel and performance enhancements such as caching.
 
 Other formats are supported, such as plain Parquet format, or Hadoop Hive format. These formats do not offer the benefits above.
