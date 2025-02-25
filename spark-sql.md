@@ -46,16 +46,27 @@ Examples of such external storage include cloud storage and on-premise database 
 
 If we drop an external table in databricks, the external data is unaffected. Only Databricks metadata is removed.
 
-> We can restore external data
+> We can restore external data - the metadata can be recreated
 
-### Table data formats
-TODO start back
+### Delta Tables
+Delta tables are a Databricks data storage format that builds on the open-source [Parquet](https://github.com/apache/parquet-format) file formay to add:
 
-Tables now default to _Delta Table_ format in Databricks, providing the benefits of ACID transactions, scalability, time-travel and performance enhancements such as caching.
+- ACID transactions
+- Time-travel (versioned history of data at points in time)
+- High performance append and delete of rows
+- High performance data caching
+- Schema enforcement
 
-Other formats are supported, such as plain Parquet format, or Hadoop Hive format. These formats do not offer the benefits above.
+The secret sauce is to add a _transaction log_ to the raw parquet file storage:
 
-For our purposes, Delta tables are preferred.
+![Delta table showing parquet file data rows with column metadata plus three entries in a transaction log](/images/delta-tables-interbals.png)
+
+> Delta tables are the preferred format in Databricks
+
+### Other table formats
+
+TODO TODO 
+
 
 ## Working with Spark SQL
 SQL only works on tables and views. To use SQL with a dataframe, we must first convert it to a table or a view.
