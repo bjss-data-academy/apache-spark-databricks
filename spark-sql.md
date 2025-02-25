@@ -49,7 +49,7 @@ If we drop an external table in databricks, the external data is unaffected. Onl
 > We can restore external data - the metadata can be recreated
 
 ### Delta Tables
-Delta tables are a Databricks data storage format that builds on the open-source [Parquet](https://github.com/apache/parquet-format) file formay to add:
+Delta tables are a Databricks data storage format that builds on the open-source [Parquet](https://github.com/apache/parquet-format) file format to add:
 
 - ACID transactions
 - Time-travel (versioned history of data at points in time)
@@ -61,12 +61,17 @@ The secret sauce is to add a _transaction log_ to the raw parquet file storage:
 
 ![Delta table showing parquet file data rows with column metadata plus three entries in a transaction log](/images/delta-table-internals.png)
 
-> Delta tables are the preferred format in Databricks
+A Delta Table stores data in the column-friendly Parquet format. It then adds a transaction log to overcome limitations of the Parquet format. Databricks  computes the result of the Parquet contents plus all transaction log variations to determine what the current dataset is.
 
-### Other table formats
+_Appending data_ becomes a simple addition to the transaction log. This is much faster than reading the whole parquet file, modifying it in-memory then writing it out again.
 
-TODO TODO 
+_ACID transactions_ are also a simple addition to the transaction log. 
 
+_Time-travel_ involves working through the transaction log in time sequence, until we hit the desired date. We now have a snapshot of what the data was at that time.
+
+The transaction log is stored in a folder _delta_log_ as a series of numbered `json` files.
+
+> Delta tables are the default format in Databricks
 
 ## Working with Spark SQL
 SQL only works on tables and views. To use SQL with a dataframe, we must first convert it to a table or a view.
