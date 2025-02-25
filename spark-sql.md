@@ -21,7 +21,9 @@ The difference between the two types lies in how and where the data is managed.
 
 - Databricks controls metadata
 - Databricks controls data
-  
+
+![Showing data and metadata insde Databricks management](/images/managed-table.png)  
+
 In a managed table, Databricks fully controls the data that is stored inside the table along with metadata. It decides where the data is stored. It decides how best to work with that data.
 
 > DROP TABLE deletes the metadata and the data. Data is permanently gone.
@@ -30,7 +32,9 @@ In a managed table, Databricks fully controls the data that is stored inside the
 
 - Databricks stores and controls metadata
 - External systems store and control data
-- Daatbricks has no control over the external data, only access to it
+- Databricks has no control over the external data, only access to it
+
+![Showing Databricks managing only metadata with an external provider managing data](/images/unmanaged-external-table.png)
 
 With an external table, Databricks still holds metadata information about where that data is held and how to acces it. But that's all.
 
