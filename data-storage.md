@@ -1,7 +1,5 @@
 # Data Management in Databricks
-Databricks organises data in a specific way. We need to know how to work with the structure.
-
-The big ideas are these:
+Databricks organises data in a specific way:
 
 ![Data orgnaisation in Databricks](/images/databricks-data-organisation.png)
 
