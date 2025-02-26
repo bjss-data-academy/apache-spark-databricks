@@ -1,17 +1,26 @@
-# Data Storage 
+# Data Management in Databricks
 intro TODO
 
-## Managed and External tables in Databricks
+![Data orgnaisation in Databricks](/images/databricks-data-organisation.png)
+
+## Unity Catalog
+
+## Schemas
+
+## Volumes
+DBFS
+
+## Tables
 Databricks offers two levels of support for tables - _managed_ tables or _external_ tables.
 
-Tables in Databricks are made up of data plus table metadata:
+Tables in Databricks are made up of _data_ plus table _metadata_:
 
-- Data is the actual values inside rows and columns
-- Metadata is information about how and where that data is stored
+- __Data__: values inside rows and columns
+- __Metadata__: information about how and where that data is stored
 
-Databricks manages the metadata for both types. It has to really - Databricks needs to know about the data it is dealing with.
+Databricks manages the metadata for both types. It has to; Databricks needs to know about the data it is dealing with.
 
-The difference between the two types lies in how and where the data is managed.
+The difference between the two table types lies in how and where the data is managed.
 
 ### Managed Tables
 
@@ -107,13 +116,8 @@ The syntax to create external tables uses the `LOCATION` keyword, to specify whe
 CREATE TABLE external_user
 LOCATION '/mnt/external_storage/external_user/';
 ```
-
-
-## Volumes
-
-## DBFS
-
-## In-memory processing
+## Dataframes 
+In-memory processing
 
 ## Partitions
 
