@@ -96,6 +96,15 @@ The transaction log is stored in a folder _delta_log_ as a series of numbered `j
 
 > Delta tables are the default format in Databricks
 
+# Data Processing in Databricks
+Databricks works by dividing data up into chunks called _partitions_. That data is read into memory and operations work on the in-memory data, resulting in high performance. 
+
+Each parition can be procees in parallel, on a group of _compute resources_ (_'computers'_) known as a _cluster_. Using _serverless compute_ is a recent option.
+
+There are several techniques used in splitting that data up across multiple partitions.
+
+The basic unit of processing is the _dataframe_.
+
 ## Dataframes 
 In-memory processing
 
