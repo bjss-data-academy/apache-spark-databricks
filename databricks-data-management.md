@@ -1,5 +1,5 @@
 # Data Management in Databricks
-Databricks organises data in a specific way:
+Databricks organises data in a three-level structure:
 
 ![Data orgnaisation in Databricks](/images/databricks-data-organisation.png)
 
