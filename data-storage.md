@@ -1,16 +1,36 @@
 # Data Management in Databricks
-intro TODO
+Databricks organises data in a specific way. We need to know how to work with the structure.
+
+The big ideas are these:
 
 ![Data orgnaisation in Databricks](/images/databricks-data-organisation.png)
 
-## Unity Catalog
+### Unity Catalog
+At the top, the `Unity Catalog` provides a unified approach to _data governance_. That's a fancy word for things like permissions, retention policy, encryption and so on.
 
-## Schemas
+We can have as many Unity Catalogs as we need. For most enterprises, having a single one works best.
 
-## Volumes
-DBFS
+### Schemas
+Within a Catalog we have many `schema`. These group together the various kinds of data resources we need.
 
-## Tables
+### Tables
+Tables hold relational data, familiar to us from regular database products. 
+
+### Views
+Views are based on tables, again familiar from the relational database world.
+
+In Databricks, views can provide _fine-grained security_. It is possible to create views restrictied to specific columns of a table. Views can _mask_ column values, making them unreadable - good for sensitive information.
+
+### Volumes
+Volumes allow file-based data to be stored and managed. Raw data such as CSV or JSON files can be placed inside a volume.
+
+### Functions
+User-Defined Functions (UDFs) can be created to work on data in customised ways. The code is managed by Databricks, and access controls can be applied.
+
+### AI Models
+Data can be transformed using AI models. These too can be managed as part of the Unity Catalog, just like any other data asset. 
+
+## Managed and external Tables
 Databricks offers two levels of support for tables - _managed_ tables or _external_ tables.
 
 Tables in Databricks are made up of _data_ plus table _metadata_:
