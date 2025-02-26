@@ -96,44 +96,6 @@ The transaction log is stored in a folder _delta_log_ as a series of numbered `j
 
 > Delta tables are the default format in Databricks
 
-## Working with Spark SQL
-SQL only works on tables and views. To use SQL with a dataframe, we must first convert it to a table or a view.
-
-TODO
-TODO - repetition to remove, rearrange to use scored_df as running example - clarify text and floe
-TODO
-
-### Creating an empty table
-This follows standard ANSI SQL DDL syntax, with the ability to work with complex data types.
-
-A simple example of creating a basic `User` table is:
-
-```sql
-CREATE TABLE User (
-    id BIGINT,
-    name STRING,
-    email_address STRING,
-    bio STRING
-)
-```
-
-> This creates the table `User` as a _managed_ table, using Delta format.
-
-Rows can be inserted in the normal way:
-
-```sql
-INSERT INTO User VALUES (1, "Alan", "al@example.com", "Author Java OOP Done Right, Test-Driven Deveopment in Java. Co-author Nokia Bounce, Fun School 2, Red Arrows")
-```
-
-### Create an external table
-If our user data was stored outside Databricks, we could access it as an _external table_.
-
-The syntax to create external tables uses the `LOCATION` keyword, to specify where the data is stored:
-
-```sql
-CREATE TABLE external_user
-LOCATION '/mnt/external_storage/external_user/';
-```
 ## Dataframes 
 In-memory processing
 
