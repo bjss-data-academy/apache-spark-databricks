@@ -113,9 +113,15 @@ LOCATION '/mnt/external_storage/external_user/';
 
 ## DBFS
 
+## In-memory processing
+
 ## Partitions
 
 ## Liquid Clustering
 
-# Anything else? 
-check mind map
+## Shuffle
+
+## Skew
+
+## Skip index
+
