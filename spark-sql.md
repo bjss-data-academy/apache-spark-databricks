@@ -35,7 +35,9 @@ scores_df.createOrReplaceTempView("scores")
 
 The view is named `"scores"`- passed in as the method parameter. 
 
-We can write SQL against this view. Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
+We can write SQL queries against this view. 
+
+Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
 
 ```sql
 select * from scores where score = 0 and out = 'Yes'
@@ -88,7 +90,9 @@ Assume an example of the JSON structure is:
 }
 ```
 
-> You might be able to find a schema definition for the JSON data as a [JSV](https://tour.json-schema.org/content/01-Getting-Started/01-Your-First-Schema)
+> You might find a [JSV](https://tour.json-schema.org/content/01-Getting-Started/01-Your-First-Schema) defining the data schema. 
+> 
+> It would be found in the API documentation
 
 We create a table with a column `game_results` to hold that structure:
 
@@ -160,6 +164,9 @@ Choose the one which fits your needs, based on keeping existing data or deleting
 > Take care deleting data in managed tables. You can't get it back.
 
 ## CTAS - Create Table As Select
+TODO TODO TODO
+
+## Managed and External tables
 TODO TODO TODO
 
 ## Working with Unity Catalog and Schemas
