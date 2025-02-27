@@ -8,7 +8,7 @@ Spark SQL extends ANSI SQL syntax to cover Databricks specific features. These i
 ### Convert dataframe to temporary view
 It is often useful to work with dataframe objects using SQL. To do this, we must either save the dataframe as a table, or convert it to a temporary view.
 
-Let's start with our dataframe from earlier listing scores. We'll create it in memory first:
+Let's start with our scores dataframe from earlier. We'll create the dataframe:
 
 ```python
 %python
@@ -22,28 +22,31 @@ scores_df = spark.createDataFrame([
     ], column_names)
 ```
 
-Calling `createOrReplaceTempView()` on the dataframe converts it to a temporary view:
+We can convert to a temporary view by calling `createOrReplaceTempView()`:
 
 ```python
 scores_df.createOrReplaceTempView("scores")
 ```
 
-This creates a temporary view named `scores`. We can treat the view as a normal table and use SQL against it.
+The view is named `"scores"`- passed in as the method parameter. 
 
-Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
+We can write SQL against this view. Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
 
 ```sql
 select * from scores where score = 0 and out = 'Yes'
 ```
 
-This shows the following list of miserable failures, batters who we hope will do better in future:
+Giving the following list of miserable failures, batters who we hope will do better in future:
 
 ![Results of SQL statement](/images/useless-batters.png)
 
-## Basic SQL queries
-Once we have a table or view, all the usual SQL basics apply. 
+### Further reading for SQL
+For more information on SQL see:
+- [Fundamentals of SQL](https://github.com/bjssacademy/fundamentals-sql/tree/main)
+- [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md)
 
-For more information, see [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md) and [Fundamentals of SQL](https://github.com/bjssacademy/fundamentals-sql/tree/main)
+## Using SQL in Python
+We can use SQL statements directly against the dataframe object in Python:
 
 ![SQL statement in Python call](/images/sql-in-python.png)
 
@@ -59,45 +62,37 @@ Spark adds some new features to SQL:
 For more information, see [Databricks Spark SQL reference](https://docs.databricks.com/aws/en/sql/language-manual/)
 
 ## Creating tables with SQL DDL
-We can use SQL DDL (Data Definition Lnaguage) to create tables:
+We can use the extended Spark SQL DDL (Data Definition Lnaguage) to create tables:
 
 ```sql
-USE `2870560854981942`.`spark-training`;
-
-CREATE TABLE `spark-training`.scores (player STRING, game STRING, score INTEGER);
+CREATE OR REPLACE TABLE scores (player STRING, game STRING, score INTEGER);
 ```
 
 We can then use standard SQL DML (Data Manipulation Language) to insert rows:
 
 ```sql
-INSERT INTO `spark-training`.scores VALUES ('Alan', 'scramble', 10000);
-INSERT INTO `spark-training`.scores VALUES ('Rosie', 'tiddlywinks', 15);
+INSERT INTO scores VALUES ('Alan', 'scramble', 10000);
+INSERT INTO scores VALUES ('Rosie', 'tiddlywinks', 15);
 ```
 
 and execute queries:
 
 ```sql
-SELECT * FROM `spark-training`.scores ORDER BY score DESC;
+SELECT * FROM scores ORDER BY score DESC;
 ```
 
 ### Spark DDL extensions
-Spark _extends DDL_ syntax to allow us to create, populate and query tables using complex data types:
-
-```sql
-
-```
-
-Here is a more complex - and highly contrived - example. 
+Spark _extends DDL_ syntax to allow us to create, populate and query tables using complex data types.
 
 Let's create and populate a table with a column holding a map of arrays of struct:
 
 ```sql
-CREATE TABLE IF NOT EXISTS `spark-training`.examples (
+CREATE TABLE IF NOT EXISTS examples (
   player STRING, 
   game_history MAP<STRING, ARRAY<STRUCT<date STRING, score INTEGER>>>
 );
 
-INSERT INTO `spark-training`.examples VALUES (
+INSERT INTO examples VALUES (
   "Alan", 
   MAP("scramble", ARRAY(
     STRUCT("2022-01-01", 9950), 
@@ -119,7 +114,7 @@ WITH exploded_game_history AS (
     game, 
     results
   FROM 
-    `spark-training`.examples 
+    examples 
     LATERAL VIEW explode(game_history) AS game, results
 ),
 exploded_results AS (
@@ -160,11 +155,30 @@ Choose the one which fits your needs, based on keeping existing data or deleting
 ## CTAS - Create Table As Select
 TODO TODO TODO
 
+## Working with Unity Catalog and Schemas
+Typically, the tables and views we work with will be grouped into a _schema_ managed overall by a _Unity Catalog_.
+
+We will need permissions granting from whoever can grant them. That's outside scope.
+
+Once we have permissions, the `USE` keyword specifies which catalog and schema we want to use.
+
+Assuming a catalog named `bjss` and a schema named `training`:
+
+```
+%sql
+USE bjss.training;
+```
+
+And all references objects inside the schema must be prefixed by the schema name. 
+
+Assuming a table `scores`:
+
+```sql
+%sql
+select * from bjss.scores;
+```
 
 # TODO
-vvvv TODO  vvvvv
-
-create or replace table
 
 Managed versus Unmanaged tables [external]
 deletion rules
@@ -173,6 +187,4 @@ Creating views
 Metadata: What's inside this database?
 Reading tables into dataframes
 Reading CSV into table
-
-We can also use SQL programmatically, using `spark.sql`:
 
