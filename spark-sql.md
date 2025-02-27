@@ -1,13 +1,17 @@
 # Using Spark SQL
-We can use familiar SQL statements in Databricks, aloowing us to work with relational data in the form of tables and views. 
+We can use familiar SQL to work with tables and views in Databricks.
 
-Spark SQL extends ANSI SQL syntax to cover Databricks specific features. These include support for complex data types in columns and the concept of [managed tables](data-storage.md).
+Spark SQL adds extensions for databricks specific features, such as complex data types and [managed tables](data-storage.md).
 
 ## Working with Spark SQL
-TODO
+We can enter SQL directly into a Notebook. 
+
+We need some tables (or views) to work on. Let's create an in-mmeory dataframe, then convert it to a view.
 
 ### Convert dataframe to temporary view
-It is often useful to work with dataframe objects using SQL. To do this, we must either save the dataframe as a table, or convert it to a temporary view.
+It is often useful to work with dataframe objects using SQL. 
+
+To do this, we must either save the dataframe as a table, or convert it to a temporary view.
 
 Let's start with our scores dataframe from earlier. We'll create the dataframe:
 
@@ -42,19 +46,20 @@ Giving the following list of miserable failures, batters who we hope will do bet
 ![Results of SQL statement](/images/useless-batters.png)
 
 ## Spark extensions to SQL
-Spark adds some new features to SQL:
+Spark extends SQL to support Databricks specific features:
 
 - New column types STRUCT, ARRAY, MAP, JSON
 - Dot notation to access STRUCT fields
 - Colon notation to access MAP fields
+- MANAGED and EXTERNAL tables
 
 For more information, see [Databricks Spark SQL reference](https://docs.databricks.com/aws/en/sql/language-manual/)
 
-## Creating tables with SQL DDL
-We can use the extended Spark SQL DDL (Data Definition Lnaguage) to create tables:
+## Creating tables
+We can use Spark extended DDL (Data Definition Lnaguage) to create tables:
 
 ```sql
-CREATE OR REPLACE TABLE scores (player STRING, game STRING, score INTEGER);
+CREATE TABLE scores (player STRING, game STRING, score INTEGER);
 ```
 
 We can then use standard SQL DML (Data Manipulation Language) to insert rows:
@@ -73,15 +78,27 @@ SELECT * FROM scores ORDER BY score DESC;
 ### Spark DDL extensions
 Spark _extends DDL_ syntax to allow us to create, populate and query tables using complex data types.
 
-Let's create and populate a table with a column holding a map of arrays of struct:
+Let's create a table `game_results` suitable for holding a raw piece of JSON data we've ingested from an API.
+
+Assume an example of the JSON structure is:
+
+```json
+{
+  "scramble": [{ "playedOn": "2022-01-01", "score": 9950}]
+}
+```
+
+> You might be able to find a schema definition for the JSON data as a [JSV](https://tour.json-schema.org/content/01-Getting-Started/01-Your-First-Schema)
+
+We create a table with a column `game_results` to hold that structure:
 
 ```sql
-CREATE TABLE IF NOT EXISTS examples (
+CREATE TABLE IF NOT EXISTS game_results (
   player STRING, 
   game_history MAP<STRING, ARRAY<STRUCT<date STRING, score INTEGER>>>
 );
 
-INSERT INTO examples VALUES (
+INSERT INTO game_results VALUES (
   "Alan", 
   MAP("scramble", ARRAY(
     STRUCT("2022-01-01", 9950), 
@@ -103,7 +120,7 @@ WITH exploded_game_history AS (
     game, 
     results
   FROM 
-    examples 
+    game_results 
     LATERAL VIEW explode(game_history) AS game, results
 ),
 exploded_results AS (
@@ -124,9 +141,8 @@ which gives a much more straightforward result:
 
 ![Results of complex query](/images/complex-query.png)
 
-While contrived, this _could_ appear in real-life following ingestion of JSON structured data provided by a REST or GraphQL API. 
 
-Our silver layer processing would want to work with that nested data to simplify access. Simplified results would populate the Gold layer tables.
+Our silver layer processing often deals with such situations. We ingest complex data structures in bronze, as that is their original format. Silver layer then transforms those structures to something easier for analytics to work with.
 
 ## Handling existing tables
 Sometimes a table already exists of the name we want to use.
