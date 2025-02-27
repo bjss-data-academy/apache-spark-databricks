@@ -4,6 +4,7 @@ We can use familiar SQL statements in Databricks, aloowing us to work with relat
 Spark SQL extends ANSI SQL syntax to cover Databricks specific features. These include support for complex data types in columns and the concept of [managed tables](data-storage.md).
 
 ## Working with Spark SQL
+TODO
 
 ### Convert dataframe to temporary view
 It is often useful to work with dataframe objects using SQL. To do this, we must either save the dataframe as a table, or convert it to a temporary view.
@@ -39,18 +40,6 @@ select * from scores where score = 0 and out = 'Yes'
 Giving the following list of miserable failures, batters who we hope will do better in future:
 
 ![Results of SQL statement](/images/useless-batters.png)
-
-### Further reading for SQL
-For more information on SQL see:
-- [Fundamentals of SQL](https://github.com/bjssacademy/fundamentals-sql/tree/main)
-- [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md)
-
-## Using SQL in Python
-We can use SQL statements directly against the dataframe object in Python:
-
-![SQL statement in Python call](/images/sql-in-python.png)
-
-This can be useful as it allows SQL to be generated inside Python code. 
 
 ## Spark extensions to SQL
 Spark adds some new features to SQL:
@@ -146,11 +135,13 @@ We need to decide what to do with the existing table and its data.
 
 We have three options:
 
-- __DROP TABLE__ remove the table if we know it is there
-- __CREATE OR REPLACE TABLE__ will delete all existing data in the table and replace it
-- __CREATE TABLE IF NOT EXISTS__ will take no action if the table already exists
+- `DROP TABLE` remove the table if we know it is there
+- `CREATE OR REPLACE TABLE` will delete all existing data in the table and replace it
+- `CREATE TABLE IF NOT EXISTS` will take no action if the table already exists
 
 Choose the one which fits your needs, based on keeping existing data or deleting it.
+
+> Take care deleting data in managed tables. You can't get it back.
 
 ## CTAS - Create Table As Select
 TODO TODO TODO
@@ -177,6 +168,21 @@ Assuming a table `scores`:
 %sql
 select * from bjss.scores;
 ```
+
+## Using SQL in Python
+We can use SQL statements directly against the dataframe object in Python:
+
+![SQL statement in Python call](/images/sql-in-python.png)
+
+This can be useful as it allows SQL to be generated inside Python code. 
+
+# Further reading for SQL
+For more information on SQL see:
+- [Fundamentals of SQL](https://github.com/bjssacademy/fundamentals-sql/tree/main)
+- [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md)
+
+# Next
+[Back to Contents](/contents.md)
 
 # TODO
 
