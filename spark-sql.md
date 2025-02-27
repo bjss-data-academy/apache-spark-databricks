@@ -179,7 +179,7 @@ LOCATION '/mnt/data/parts_data.csv/';
 
 This is a common task in silver layer processing. We have some raw data. We want some part of that raw data, perhaps only a few columns with some aggregate information. We might want to combine that data with reference tables. CTAS is the perfect tool for the job.
 
-Supppose our Bronze layer rad data containstables `scores` and `contacts`.
+Supppose our Bronze layer ingested raw data into tables `scores` and `contacts`.
 
 Scores:
 ![Contents of table scores](/images/scores.png)
@@ -189,9 +189,10 @@ Contacts:
 ![Contents of table contacts](/images/contacts.png)
 
 In our Silver layer, we want to work with three columns:
-- the Player's name
-- their email address
-- their score
+
+- the Player's _name_
+- their _email_ address
+- their _score_
 
 We can create a new table `player_summary` using the CTAS syntax:
 
@@ -206,6 +207,9 @@ ON s.Player = c.Player;
 Resulting in:
 
 ![Rows of new table player_summary](/images/player-summary.png)
+
+> Handy: CREATE OR REPLACE TABLE <name> AS [...]
+
 
 ## Managed and External tables
 TODO TODO TODO
