@@ -199,7 +199,10 @@ We can use SQL statements directly against the dataframe object in Python:
 
 This can be useful as it allows SQL to be generated inside Python code. 
 
-# Further reading for SQL
+# Further reading
+Databricks documentation:
+- [CREATE TABLE options](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-table-using)
+
 For more information on SQL see:
 - [Fundamentals of SQL](https://github.com/bjssacademy/fundamentals-sql/tree/main)
 - [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md)
