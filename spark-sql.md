@@ -188,19 +188,14 @@ We can mark a column to be auto-generated. Perfect for generating surrogate keys
 
 Values for column `id` will be auto-generated.
 
-## CTAS - Create Table As Select
+## Using CTAS - Create Table As Select
 `CREATE TABLE AS SELECT` (CTAS) is very useful. It creates a new table from the results of a SQL query. 
 
 This is a common task in silver layer processing. We have some raw data. We want some part of that raw data, perhaps only a few columns with some aggregate information. We might want to combine that data with reference tables. CTAS is the perfect tool for the job.
 
 Supppose our Bronze layer ingested raw data into tables `scores` and `contacts`.
 
-Scores:
-![Contents of table scores](/images/scores.png)
-
-
-Contacts:
-![Contents of table contacts](/images/contacts.png)
+![Contents of tables scores and contacts](/images/scores-contacts.png)
 
 In our Silver layer, we want to work with three columns:
 
