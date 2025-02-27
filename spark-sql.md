@@ -6,7 +6,7 @@ Spark SQL adds extensions for databricks specific features, such as complex data
 ## Working with Spark SQL
 We can enter SQL directly into a Notebook. 
 
-We need some tables (or views) to work on. Let's create an in-mmeory dataframe, then convert it to a view.
+We need some tables (or views) to work on. Sounds like a good excuse to practice converting a dataframe to a view.
 
 ### Convert dataframe to temporary view
 It is often useful to work with dataframe objects using SQL. 
