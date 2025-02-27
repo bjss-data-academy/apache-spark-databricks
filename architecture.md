@@ -6,7 +6,7 @@
 > - Execution Architecture - new - workers task stage job executor driver control plance data plane
 > - Data Organisation - catalog/schema section
 > - Data Governance - new - explain permissions in three level structure
-> - Data Performance - section about partition, skew, shuffle. Add AQE. Add graphics showing wide/narrow work
+> - Data Performance - move to performance page - section about partition, skew, shuffle. Add AQE. Add graphics showing wide/narrow work
 > TODO
 
 
