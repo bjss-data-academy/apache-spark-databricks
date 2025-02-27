@@ -16,7 +16,6 @@ To do this, we must either save the dataframe as a table, or convert it to a tem
 Let's start with our scores dataframe from earlier. We'll create the dataframe:
 
 ```python
-%python
 column_names = ["Player", "Score", "Out"]
 
 scores_df = spark.createDataFrame([
