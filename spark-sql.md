@@ -63,6 +63,10 @@ We can then show all tables inside one of those schemas, using `SHOW TABLES`:
 
 ![Show tables output](/images/show-tables.png)
 
+The table schema can be viewed using `DESCRIBE`:
+
+![Describe table output](/images/describe-table.png)
+
 Read more at [Databricks Documentation](https://docs.databricks.com/aws/en/discover/database-objects)
 
 ## Spark extensions to SQL
