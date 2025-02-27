@@ -60,7 +60,10 @@ For more information, see [Databricks Spark SQL reference](https://docs.databric
 We can use Spark extended DDL (Data Definition Lnaguage) to create tables:
 
 ```sql
-CREATE TABLE scores (player STRING, game STRING, score INTEGER);
+CREATE TABLE scores (
+      player STRING,
+      game STRING,
+      score INTEGER );
 ```
 
 We can then use standard SQL DML (Data Manipulation Language) to insert rows:
@@ -173,6 +176,18 @@ USING CSV
 LOCATION '/mnt/data/parts_data.csv/';
 ```
 
+## Auto increment identity columns
+We can mark a column to be auto-generated. Perfect for generating surrogate keys:
+
+```sql
+   CREATE TABLE defects
+      id GENERATED ALWAYS AS IDENTITY,
+      description STRING,
+      reported_on DATE
+```
+
+Values for column `id` will be auto-generated.
+
 ## CTAS - Create Table As Select
 `CREATE TABLE AS SELECT` (CTAS) is very useful. It creates a new table from the results of a SQL query. 
 
@@ -210,8 +225,25 @@ Resulting in:
 > Handy: CREATE OR REPLACE TABLE <name> AS [...]
 
 
-## Managed and External tables
-TODO TODO TODO
+## Creating External tables
+[External tables](/architecture.md) store their data outside of our Databricks system, perhaps on an external cloud provider, or corporate on-premises hardware.
+
+We can mark a table in Databricks as being externally hosted:
+
+```sql
+CREATE TABLE parts
+(
+  id GENERATED ALWAYS AS IDENTITY,
+  name STRING
+)
+LOCATION 's3://<bucket-path>/<table-directory>';
+```
+
+The key is to use the `LOCATION` keyword to specify an accessible path to the storage location.
+
+> DROP TABLE and DELETE FROM will NOT delete data in the external table
+
+For more, see [External Tables - Databricks Documentation](https://docs.databricks.com/aws/en/tables/external)
 
 ## Working with Unity Catalog and Schemas
 Typically, the tables and views we work with will be grouped into a _schema_ managed overall by a _Unity Catalog_.
