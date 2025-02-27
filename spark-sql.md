@@ -46,6 +46,25 @@ Giving the following list of miserable failures, batters who we hope will do bet
 
 ![Results of SQL statement](/images/useless-batters.png)
 
+## Exploring data
+We can find out data is available to us by ubnsing the `SHOW`, and `DESCRIBE` commands.
+
+`SHOW CATALOGS` lists all Catalogs available to us:
+
+![Show catalogs output](/images/show-catalogs.png)
+
+Inside a catalogue, we can see what schemas are available, using `SHOW SCHEMA':
+
+![Show schemas output](/images/show-schemas.png)
+
+> Note the `USE` keyword to select one of the catalogs we listed before
+
+We can then show all tables inside one of those schemas, using `SHOW TABLES`:
+
+![Show tables output](/images/show-tables.png)
+
+Read more at [Databricks Documentation](https://docs.databricks.com/aws/en/discover/database-objects)
+
 ## Spark extensions to SQL
 Spark extends SQL to support Databricks specific features:
 
