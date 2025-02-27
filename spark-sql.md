@@ -163,8 +163,49 @@ Choose the one which fits your needs, based on keeping existing data or deleting
 
 > Take care deleting data in managed tables. You can't get it back.
 
+## Convert data files into tables
+Have some data in files, like some CSV or JSON files? We can convert to tables directly.
+
+Convert a CSV file `parts_data.csv` stored at `/mnt/data/parts_data.csv/` to a table:
+
+```sql
+CREATE TABLE parts
+USING CSV
+LOCATION '/mnt/data/parts_data.csv/';
+```
+
 ## CTAS - Create Table As Select
-TODO TODO TODO
+`CREATE TABLE AS SELECT` (CTAS) is very useful. It creates a new table from the results of a SQL query. 
+
+This is a common task in silver layer processing. We have some raw data. We want some part of that raw data, perhaps only a few columns with some aggregate information. We might want to combine that data with reference tables. CTAS is the perfect tool for the job.
+
+Supppose our Bronze layer rad data containstables `scores` and `contacts`.
+
+Scores:
+![Contents of table scores](/images/scores.png)
+
+
+Contacts:
+![Contents of table contacts](/images/contacts.png)
+
+In our Silver layer, we want to work with three columns:
+- the Player's name
+- their email address
+- their score
+
+We can create a new table `player_summary` using the CTAS syntax:
+
+```sql
+CREATE TABLE player_summary AS
+SELECT s.Player, s.Score, c.Email
+FROM scores s
+JOIN contacts c
+ON s.Player = c.Player;
+```
+
+Resulting in:
+
+![Rows of new table player_summary](/images/player-summary.png)
 
 ## Managed and External tables
 TODO TODO TODO
@@ -180,16 +221,15 @@ Assuming a catalog named `bjss` and a schema named `training`:
 
 ```
 %sql
-USE bjss.training;
+USE CATALOG bjss;
+USE SCHEMA training;
 ```
 
-And all references objects inside the schema must be prefixed by the schema name. 
-
-Assuming a table `scores`:
+We can then reference table `scores`:
 
 ```sql
 %sql
-select * from bjss.scores;
+select * from scores;
 ```
 
 ## Using SQL in Python
