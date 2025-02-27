@@ -1,4 +1,15 @@
 # Data Management in Databricks
+
+> TODO
+> Consider moving this out into databricks specific course
+> re organise as databricks organisation / Big Ideas
+> - Execution Architecture - new - workers task stage job executor driver control plance data plane
+> - Data Organisation - catalog/schema section
+> - Data Governance - new - explain permissions in three level structure
+> - Data Performance - section about partition, skew, shuffle. Add AQE. Add graphics showing wide/narrow work
+> TODO
+
+
 Databricks organises data in a three-level structure:
 
 ![Data orgnaisation in Databricks](/images/databricks-data-organisation.png)
