@@ -8,21 +8,35 @@ Spark SQL extends ANSI SQL syntax to cover Databricks specific features. These i
 ### Convert dataframe to temporary view
 It is often useful to work with dataframe objects using SQL. To do this, we must either save the dataframe as a table, or convert it to a temporary view.
 
-Converting to a temporary view is a single method call on the dataframe you want to convert:
+Let's start with our dataframe from earlier listing scores. We'll create it in memory first:
+
+```python
+%python
+column_names = ["Player", "Score", "Out"]
+
+scores_df = spark.createDataFrame([
+      ("Alan", 0, "Yes"), 
+      ("Rosie", 117, "No"), 
+      ("Dan", 89, "Yes"),
+      ("Tom", 89, "No")
+    ], column_names)
+```
+
+Calling `createOrReplaceTempView()` on the dataframe converts it to a temporary view:
 
 ```python
 scores_df.createOrReplaceTempView("scores")
 ```
 
-The `createOrReplaceTempView` method of dataframe makes an in-memory SQL view. It is a simple matter to run SQL against it in a new notebook. 
+This creates a temporary view named `scores`. We can treat the view as a normal table and use SQL against it.
 
-Assuming our dataframe is our `scores-df` from earlier, let's find the (_rather poor - ed_) players who were out for a duck (no runs):
+Let's find the (_rather poor - ed_) players who were out for a duck (no runs):
 
 ```sql
 select * from scores where score = 0 and out = 'Yes'
 ```
 
-Showing the following list of miserable failures, batters who hope to do better in future:
+This shows the following list of miserable failures, batters who we hope will do better in future:
 
 ![Results of SQL statement](/images/useless-batters.png)
 
@@ -67,7 +81,11 @@ SELECT * FROM `spark-training`.scores ORDER BY score DESC;
 ```
 
 ### Spark DDL extensions
-Spark _extends DDL_ syntax to allow us to create, populate and query tables using complex data types.
+Spark _extends DDL_ syntax to allow us to create, populate and query tables using complex data types:
+
+```sql
+
+```
 
 Here is a more complex - and highly contrived - example. 
 
@@ -125,6 +143,19 @@ which gives a much more straightforward result:
 While contrived, this _could_ appear in real-life following ingestion of JSON structured data provided by a REST or GraphQL API. 
 
 Our silver layer processing would want to work with that nested data to simplify access. Simplified results would populate the Gold layer tables.
+
+## Handling existing tables
+Sometimes a table already exists of the name we want to use.
+
+We need to decide what to do with the existing table and its data.
+
+We have three options:
+
+- __DROP TABLE__ remove the table if we know it is there
+- __CREATE OR REPLACE TABLE__ will delete all existing data in the table and replace it
+- __CREATE TABLE IF NOT EXISTS__ will take no action if the table already exists
+
+Choose the one which fits your needs, based on keeping existing data or deleting it.
 
 ## CTAS - Create Table As Select
 TODO TODO TODO
