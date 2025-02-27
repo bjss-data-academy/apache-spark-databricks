@@ -280,13 +280,4 @@ For more information on SQL see:
 # Next
 [Back to Contents](/contents.md)
 
-# TODO
-
-Managed versus Unmanaged tables [external]
-deletion rules
-
-Creating views
-Metadata: What's inside this database?
-Reading tables into dataframes
-Reading CSV into table
 
