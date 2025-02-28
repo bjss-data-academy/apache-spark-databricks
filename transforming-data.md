@@ -1,11 +1,23 @@
 # Transforming Data using DataFrames
 The main task of Spark code is to build our [medallion architecture](https://github.com/bjss-data-academy/data-engineering-fundamentals/blob/main/medallion-architecture.md) and transform raw data into useful business insights.
 
-Spark transform methods see most use in the solver and gold layers, as we augment our data and create the top-level business aggregates that give insights:
+We saw how raw data can be ingested in the Bronze layer, using raw files in [Volumes](/architecture.md) and reading raw files into [DataFrames](/spark-dataframe.md)
+
+The silver layer focusses on _filtering_, _cleaning_ and _augmenting_ data. 
 
 ![medallion architecture with silver and gold layers emphasised](/images/medallion-silver-gold-emphasised.png)
 
-Spark provides many features and functions to do that, organised around dataframes. By design, they resemble SQL commands.
+Typical Silver layer tasks include:
+
+- Removing unnecessary columns
+- Removing unnecessary rows of data
+- Adding aggregate quantities
+- Joining multiple data sources together
+- Cross-referencing to reference data sets
+
+Spark transform methods see most use in the silver and gold layers, as we augment our data and create the top-level business aggregates that give insights:
+
+Many Spark features resemble SQL commands, and can be used as methods on a dataframe object.
 
 ## Select 
 Like SQL [SELECT..FROM](https://sqlbolt.com/lesson/select_queries_introduction), the `select()` method on dataframe allows us to choose which columns to work with.
