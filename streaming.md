@@ -15,8 +15,10 @@ Processing data as it happens can be important:
 - Intrusion Detection based on network traffic
 - IoT sensors. For example, weather station data
 
+> Streaming is useful wherever real-time analytics would be an advantage over delayed batch processing
+
 ## Spark support for streaming
-Behind the scenes, Spark handles streaming data by treating it as _micro-batches_. 
+Spark handles streaming data by treating it as _micro-batches_. 
 
 Data is received and batched up. At frequent intervals, this small batch of data is appended to rows in a dataframe:
 
@@ -35,13 +37,12 @@ Spark provides some input sources aimed at unit testing and manual debugging. Th
 - __Sockets__ Regular TCP sockets can serve as input sources
 - __Generator__ a function can generate data
 
-### Trigger types - when does code run?
+### Trigger types - when does Spark process this data?
 We've got the latest small batch of data into Spark - now what?
 
 We must choose a _trigger condition_ for when our Spark transform code runs. 
 
 Choose from:
-
 - _Default_: Run the code as soon as the last code run completes
 - _Fixed interval_: Run the code at fixed time intervals. Example: every 5 minutes
 - _Available Now_: Run the code against all the micro-batches available now, then stop
@@ -76,7 +77,7 @@ If there is a problem after this, the log entry will persist. Spark can then rec
 ### Idempotent sinks
 _Idempotence_ means that an operation can be applied multiple times without changing the end result.
 
-Many things are not idempotent. Say I want to pay only £10 into my bank, but I accidentally hit the pay buttone twice. £20 will go into my bank - not what I wanted to do at all. We need to make this button idempotent, so that we can press it as many times as we like, and still only have the bank balance go up by £10.
+Many things are not idempotent. Say I want to pay only £10 into my bank, but I accidentally hit the `pay #10` buttone twice. £20 will go into my bank - not what I wanted to do at all. We need to make this button idempotent, so that we can press it as many times as we like, and still only have the bank balance go up by £10.
 
 Spark adds idempotence to write operations. This avoids accidental duplication of results data.
 
@@ -88,18 +89,17 @@ Normally, that data is simply lost forever. We were looking the other way at the
 Spark adds some features to allow a data source to be _replayed_. We can ask for the data to be repeated to us.
 
 ## Aggregations
-intro aggs over stream data why, use cases
+We have seen how dataframes support [aggregate operations](/transforming-data.md) like sum and average.
+
+These are very useful to run over streaming data sources. An example would be finding the total number of website visits in the last hour from web server logs.
+
+Spark makes aggregating streaming data easy to do. To us, it looks like any other dataframe operation. Behind the scenes, Spark tracks which data values were included in the last run, and accounts for that.
+
+
 
 Aggregations
 Windows
 Watermarking
-
-examples
-Sentiment analysis on messaging platforms as messages come in
-IoT results: analysing real-time weather data 
-Unusual Activity Detection: Bank transactions, HTTP traffic with DDoS attacks
-
-> Many applications: wherever real-time analytics would be an advantage over delayed batch processing
 
 ## Windows
 Time-Based Windows
