@@ -95,53 +95,62 @@ These are very useful to run over streaming data sources. An example would be fi
 
 Spark makes aggregating streaming data easy to do. To us, it looks like any other dataframe operation. Behind the scenes, Spark tracks which data values were included in the last run, and accounts for that.
 
+## Time-Based Windows
+We're often concerned with _time_ in our analyses. When did a thing happen? How many things happened in the last hour?
 
+One challenge with streaming is "how do we treat time when we aggregate data"?
 
-Aggregations
-Windows
-Watermarking
+If we are aggregating some data value over time, it makes sense to chunk up time itself into discrete blocks.
 
-## Windows
-Time-Based Windows
-Tumbling Windows Sliding Windows
-No window overlap
-Any given event gets
-aggregated into only one
-window group
-e.g. 1:00–2:00 am, 2:00–3:00
-am, 3:00-4:00 am, ...
-Windows overlap
-Any given event gets
-aggregated into multiple
-window groups
-e.g. 1:00-2:00 am, 1:30–2:30 am,
-2:00–3:00 am, ...
+We call these time blocks _windows_.
 
-sliding windows example
-- make graphic
+There are two variations on a time window in Spark: _Tumbling_ and _Sliding_ windows. Each has a different purpose.
+
+### Tumbling window
+Tumbling windows are intervals of time that _have no overlap_:
+
+![Showing intervals of time not overlapping](/images/tumbling-window.png)
+
+We see three events, happening at times 10:32, 11:59 and 13:02. Each one of these events fits into only one time window. The 10:32 event, for example, fits into the time window for events during 10:00 to 10:59.
+
+This approach is useful for bucketing events at a fixed granularity. We can answer questions like "How many visitors did we have in the hour starting at 10:00?"
+
+We can set up a windowing query easily in Python:
   
-## code
-(streamingDF
-.groupBy(col("device"),
-window(col("time"), "1 hour"))
-.count())
-
-### Note on Partitions and stremaing
-
-200 default - bad
-change to something better
-
 ```python
-spark.conf.set("spark.sql.shuffle.partitions", spark.sparkContext.defaultParallelism)
+vistor_stream_df.groupBy(col("visit_location"), window(col("time"), "1 hour")).count()
 ```
 
-## Event-Time Processing
-EVENT-TIME DATA
-Process based on event-time
-(time fields embedded in data)
-rather than receipt time
+This would take a streaming dataframe which tracked visitors to different locations in real-time. The query would group by the visit location, then count how many vistors were present during one-hour time windows.
 
-### WATERMARKS
+### Sliding window
+Sliding windows have overlaps in the intervals they represent:
+
+![Showing intervals of time overlapping](/images/sliding-window.png)
+
+The same three events are happening at 10:32, 11:59 and 13:02 as before. But we're using sliding windows. Each window is one hour wide, but it _overlaps_ other windows so that we get a half-hour granularity. 
+
+The 10:32 event will be recorded _twice_: Once in the 10:00-10:59 window, because the visit occureed in that period. But _also_ in the overalpping window of 10:30 - 11:29. The event also took place in that time period. 
+
+The event is not being 'double counted' here. It is simply being included in every relevant time period we are monitoring.
+
+We can ask the questions "How many visitors in the hour starting at 10:00?" and "How many visitors for the hour starting at 10:30?". Visits will be correctly included in the relevant time period.
+
+## Event-Time Processing
+A big question with time-related data is "what time do we use?"
+
+This might sound like the answer is obvious: "The time the event happened". But we weren't there watching, so we don;t know. We must be told.
+
+There are two main ways to decide when an event happened:
+
+- _Embedded field_ such as a timestamp, recorded by a sensor, then written into the data record itself
+- _Time of receipt_ the system clock time at which Spark first received the data
+
+The two times are often different. An event may be recorded at 11:01. But we may only receive it two minutes later, due to some latency within the acquisition.
+
+## Late data - Watermarks
+TODO TODO
+
 Handle late data and limit how
 long to remember old data
 
@@ -152,6 +161,14 @@ long to remember old data
 window(col("time"), "1 hour"))
 .count()
 )
+```
+### Note on Partitions and stremaing
+
+200 default - bad
+change to something better
+
+```python
+spark.conf.set("spark.sql.shuffle.partitions", spark.sparkContext.defaultParallelism)
 ```
 
 # Further Reading
