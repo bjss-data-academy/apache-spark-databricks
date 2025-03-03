@@ -7,7 +7,7 @@ This data is said to be _streaming_. A stream of data trickles through our syste
 
 Spark provides easy to use tools to work with streaming data. Best of all, they are based on the familiar dataframe based tools we already know.
 
-## Use Cases
+## Use Cases for streaming
 Processing data as it hapens can be important:
 
 - Real-time scoring systems for sports
@@ -15,7 +15,7 @@ Processing data as it hapens can be important:
 - Intrusion Detection based on network traffic
 - IoT sensors. For example, weather station data
 
-## Spark structured streaming
+## Spark support for streaming
 Behind the scenes, Spark handles streaming data by treating it as _micro-batches_. 
 
 Data is received and batched up. At frequent intervals, this small batch of data is appended to rows in a dataframe:
@@ -35,34 +35,26 @@ Spark provides some input sources aimed at unit testing and manual debugging. Th
 - __Sockets__ Regular TCP sockets can serve as input sources
 - __Generator__ a function can generate data
 
-### Trigger types
-- Default
-- Fixed interval
-- Available now
-- Continuous
+### Trigger types - when does code run?
+We've got the latest small batch of data into Spark - now what?
 
-Process each micro-batch as soon as the previous
-one has been processed
+We must choose a _trigger condition_ for when our Spark transform code runs. 
 
-Fixed interval Micro-batch processing kicked off at the
-user-specified interval
+Choose from:
 
-Available now
-Process all of the available data in multiple
-micro-batches and then automatically stop the query
-
-Continuous
-Processing
-Long-running tasks that continuously read, process,
-and write data as soon events are available
-*Experimental See Structured Streaming Programming Guide
+- _Default_: Run the code as soon as the last code run completes
+- _Fixed interval_: Run the code at fixed time intervals. Example: every 5 minutes
+- _Available Now_: Run the code against all the micro-batches available now, then stop
+- _Continuous Processing_: Long running cycle of fetch data, process, output and repeat
   
 ### Outputs
+Once our code has transformed the data, we need to send the results somewhere.
 
-- Kafka
-- Event hub
-- Files
-- Foreach
+Options are:
+- _Kafka_: Post a Kafka message to be processed there
+- _Event hub_: Raise an event on some event hub
+- _Files_: Write a file containing the results
+- _Foreach_: Works across multiple dataframes to generate output
 
 For debug/test
 
@@ -153,3 +145,10 @@ window(col("time"), "1 hour"))
 .count()
 )
 ```
+
+# Further Reading
+
+- [Spark Streaming Guide](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)
+
+# Next
+[Back to Contents](/contents.md)
