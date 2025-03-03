@@ -1,14 +1,14 @@
 # Streaming Data
-Up to now, data has been a big old pile of values that we process as a single unit. This is batch processing. It is useful for, well - batches of data. Things like sales reports that come in at the end of a working day.
+Up to now, data has been a big old pile of static values that we process as a single unit. This is batch processing. It is useful for, well - batches of data. Things like sales reports that come in at the end of a working day.
 
-A lot of real world data happens in real time. It is constantly being added to. 
+A lot of real world data isn't like that. It happens in real time. It is constantly changing. 
 
 This data is said to be _streaming_. A stream of data trickles through our system constantly.
 
 Spark provides easy to use tools to work with streaming data. Best of all, they are based on the familiar dataframe based tools we already know.
 
 ## Use Cases for streaming
-Processing data as it hapens can be important:
+Processing data as it happens can be important:
 
 - Real-time scoring systems for sports
 - Sentiment analysis on a messaging platform
@@ -65,12 +65,27 @@ There are three different approaches to writing output:
 
 The modes differ in how the existing data is treated. `Append` adds to it. `Update` overwrites it. `Complete` rewrites it.
 
-## Fault tolerance
-End-to-end fault tolerance
-Guaranteed in Structured Streaming by
-Checkpointing and write-ahead logs
-Idempotent sinks
-Replayable data sources
+## Fault tolerance features
+Things can go wrong with real-time data capture. Spark builds in some fault-tolerance features.
+
+### Checkpointing and write-ahead logs
+Before Spark makes a change to some data, it writes a log entry saying what change it is about to make. This is a _write-ahead log entry_.
+
+If there is a problem after this, the log entry will persist. Spark can then recover from the problem, and have a record of the data that needs to be included.
+
+### Idempotent sinks
+_Idempotence_ means that an operation can be applied multiple times without changing the end result.
+
+Many things are not idempotent. Say I want to pay only £10 into my bank, but I accidentally hit the pay buttone twice. £20 will go into my bank - not what I wanted to do at all. We need to make this button idempotent, so that we can press it as many times as we like, and still only have the bank balance go up by £10.
+
+Spark adds idempotence to write operations. This avoids accidental duplication of results data.
+
+### Replayable data sources
+What happens if real-time data fails to be captured?
+
+Normally, that data is simply lost forever. We were looking the other way at the critical moment.
+
+Spark adds some features to allow a data source to be _replayed_. We can ask for the data to be repeated to us.
 
 ## Aggregations
 intro aggs over stream data why, use cases
