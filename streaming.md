@@ -1,27 +1,39 @@
 # Streaming Data
-intro todo
+Up to now, data has been a big old pile of values that we process as a single unit. This is batch processing. It is useful for, well - batches of data. Things like sales reports that come in at the end of a working day.
 
-## Benefits
+A lot of real world data happens in real time. It is constantly being added to. 
+
+This data is said to be _streaming_. A stream of data trickles through our system constantly.
+
+Spark provides easy to use tools to work with streaming data. Best of all, they are based on the familiar dataframe based tools we already know.
 
 ## Use Cases
+Processing data as it hapens can be important:
 
-## Micro-batching
-its batches really
+- Real-time scoring systems for sports
+- Sentiment analysis on a messaging platform
+- Intrusion Detection based on network traffic
+- IoT sensors. For example, weather station data
 
-## Structured streaming
-appends rows to unbounded table
+## Spark structured streaming
+Behind the scenes, Spark handles streaming data by treating it as _micro-batches_. 
+
+Data is received and batched up. At frequent intervals, this small batch of data is appended to rows in a dataframe:
 
 ![Stream of data appends rows to an unbounded table](/images/streaming-table.png)
 
+This table is unbounded, allowing for many rows.
+
 ## Inputs
+Data can be received from a number of sources by Spark:
 
-- Kafka
-- Event hubs
-- Files
+- __[Apache Kafka](https://kafka.apache.org/)__ The popular event-handling software 
+- __Event hubs__ can be wired up
+- __Files__ can be scanned for changes and ingested
 
-For debugging/test:
-- sockets
-- generator
+Spark provides some input sources aimed at unit testing and manual debugging. These are:
+- __Sockets__ Regular TCP sockets can serve as input sources
+- __Generator__ a function can generate data
 
 ### Trigger types
 - Default
