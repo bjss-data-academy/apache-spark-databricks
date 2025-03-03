@@ -54,14 +54,12 @@ Options are:
 - _Kafka_: Post a Kafka message to be processed there
 - _Event hub_: Raise an event on some event hub
 - _Files_: Write a file containing the results
-- _Foreach_: Works across multiple dataframes to generate output
+- [_Foreach_](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html): Apply a function to each row, possibly writing in a unique way
 
-For debug/test
-
-- Console
-- Memory
+For debug and test purposes, Spark can also output to _Console_ and _Memory_.
 
 ### Output modes
+There are three different approaches to output:
 
 APPEND
 Add new records
