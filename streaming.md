@@ -59,16 +59,11 @@ Options are:
 For debug and test purposes, Spark can also output to _Console_ and _Memory_.
 
 ### Output modes
-There are three different approaches to output:
+There are three different approaches to writing output:
 
-APPEND
-Add new records
-only
-UPDATE
-Update changed
-records in place
-COMPLETE
-Rewrite full output
+![Output modes listed](/images/streaming-output-modes/png)
+
+The modes differ in how the existing data is treated. `Append` adds to it. `Update` overwrites it. `Complete` rewrites it.
 
 ## Fault tolerance
 End-to-end fault tolerance
