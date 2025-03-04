@@ -144,17 +144,19 @@ Can we do anything about this?
 ### Watermarked data
 We can! 
 
-In principle, we simply defer the analytics calculation until all the late data has arrived. We can keep accepting new visitor data, keep placing it in the coorect time window, and then once all data is known to be in, do the calculation.
+In principle, we simply defer the analytics calculation until all the late data has arrived. We accept new data and place it in the correct window, even when that data is received after the window has closed.
 
-But there's a little detail there: _once all data is known to be in_. 
+But there's a little detail there: _all the late data has arrived_. 
 
 How can we know that all data is going to have arrived? 
 
-Simply put, we cannot. So instead, we decide on a cutoff point.
+Simply put, _we cannot_. Instead, we decide on a cutoff point, beyond which we discard late data.
 
-We put our engineering finger in the air, and guesstimate that any data arriving more than ...ummm... one hour late we will ignore. Choose a timeframe that makes sense given what you know about expected data arrival times.
+We put our engineering finger in the air, and guesstimate that any data arriving more than ...ummm... one hour late we will ignore. Choose whatever timeframe makes sense for your application.
 
-This is called a _watermark_ in Spark times - the maximum time to wait for late data.
+This is called a _watermark_ in Spark terms.
+
+> _Watermark_ : maximum time to wait for late data
 
 A watermark gives us two benefits:
 
