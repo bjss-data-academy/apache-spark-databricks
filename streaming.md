@@ -66,28 +66,6 @@ There are three different approaches to writing output:
 
 The modes differ in how the existing data is treated. `Append` adds to it. `Update` overwrites it. `Complete` rewrites it.
 
-## Fault tolerance features
-Things can go wrong with real-time data capture. Spark builds in some fault-tolerance features.
-
-### Checkpointing and write-ahead logs
-Before Spark makes a change to some data, it writes a log entry saying what change it is about to make. This is a _write-ahead log entry_.
-
-If there is a problem after this, the log entry will persist. Spark can then recover from the problem, and have a record of the data that needs to be included.
-
-### Idempotent sinks
-_Idempotence_ means that an operation can be applied multiple times without changing the end result.
-
-Many things are not idempotent. Say I want to pay only £10 into my bank, but I accidentally hit the `pay #10` buttone twice. £20 will go into my bank - not what I wanted to do at all. We need to make this button idempotent, so that we can press it as many times as we like, and still only have the bank balance go up by £10.
-
-Spark adds idempotence to write operations. This avoids accidental duplication of results data.
-
-### Replayable data sources
-What happens if real-time data fails to be captured?
-
-Normally, that data is simply lost forever. We were looking the other way at the critical moment.
-
-Spark adds some features to allow a data source to be _replayed_. We can ask for the data to be repeated to us.
-
 ## Aggregations
 We have seen how dataframes support [aggregate operations](/transforming-data.md) like sum and average.
 
@@ -162,7 +140,30 @@ window(col("time"), "1 hour"))
 .count()
 )
 ```
-### Note on Partitions and stremaing
+
+## Fault tolerance features
+Things can go wrong with real-time data capture. Spark builds in some fault-tolerance features.
+
+### Checkpointing and write-ahead logs
+Before Spark makes a change to some data, it writes a log entry saying what change it is about to make. This is a _write-ahead log entry_.
+
+If there is a problem after this, the log entry will persist. Spark can then recover from the problem, and have a record of the data that needs to be included.
+
+### Idempotent sinks
+_Idempotence_ means that an operation can be applied multiple times without changing the end result.
+
+Many things are not idempotent. Say I want to buy one item from an online store. I accidentally hit `Buy Now` twice. I get charged twice for the one item. We need to fix this and make this button idempotent. Then, we can press it as many times as we like, and still only pay one time.
+
+Spark adds idempotence to write operations. This avoids accidental duplication of results data.
+
+### Replayable data sources
+What happens if real-time data fails to be captured?
+
+Normally, that data is simply lost forever. We were looking the other way at the critical moment.
+
+Spark adds some features to allow a data source to be _replayed_. We can ask for the data to be repeated to us.
+
+## Partition number and streaming
 
 200 default - bad
 change to something better
