@@ -115,34 +115,70 @@ The event is not being 'double counted' here. It is simply being included in eve
 We can ask the questions "How many visitors in the hour starting at 10:00?" and "How many visitors for the hour starting at 10:30?". Visits will be correctly included in the relevant time period.
 
 ## Event-Time Processing
-A big question with time-related data is "what time do we use?"
+A big question with time-related data is "when did the event happen?"
 
-This might sound like the answer is obvious: "The time the event happened". But we weren't there watching, so we don;t know. We must be told.
+This might sound like the answer is obvious: "The time on the clock when the event happened". But we weren't there watching, so we don't know. We must be told.
 
-There are two main ways to decide when an event happened:
+There are two main approaches to recording the time of an event:
 
-- _Embedded field_ such as a timestamp, recorded by a sensor, then written into the data record itself
-- _Time of receipt_ the system clock time at which Spark first received the data
+- _Embedded field_ A field in the data record itself, set from a system clock reading when the data was read.
+- _Time of receipt_ The system clock time when Spark first received the data.
 
-The two times are often different. An event may be recorded at 11:01. But we may only receive it two minutes later, due to some latency within the acquisition.
+The two times are different. An event may be detected by the sensor at 11:01. It takes time to transmit to us. The time of receipt will always be _later_. Possibly a lot later.
 
-## Late data - Watermarks
-TODO TODO
+## When data turns up late
+Here's a problem. We are using tumbling windows to work out how many visitors we get in each hour. We have a real-time visitor sensor. But it has a flaky wireless connection.
 
-Handle late data and limit how
-long to remember old data
+This means the "new visitor at 11:02" message sometimes gets to us late, say at 12:15. 
+
+Oh dear. This means our results cannot be correct. When we worked out how many visits we had between 11:00 and 11:59, we actually had one more than we knew about at that time.
+
+This is an inescapable problem with real-time analytics. 
+
+Can we do anything about this?
+
+### Watermarked data
+We can! 
+
+In principle, we simply defer the analytics calculation until all the late data has arrived. We can keep accepting new visitor data, keep placing it in the coorect time window, and then once all data is known to be in, do the calculation.
+
+But there's a little details there: _once all data is known to be in_. 
+
+How can we know that all data is going to have arrived? Simply put, we cannot. So instead, we decide on a cutoff point.
+
+We put our engineering finger in the air, and guesstimate that any data arriving more then one hour late we will ignore. 
+
+This is called a _watermark_ in Spark times - the amout of time we are willing to wait for late data.
+
+A watermark gives us two benefits:
+
+- Statistically, we will capture _most_ of the late data points, gaining accuracy in the calculations
+- We are not waiting _forever_ for data
+
+Not waiting forever is practical. It saves us retaining data in memory indefinitely; we can discard it after the watermark. It provides a time at which we can run our calculation.
+
+Adding a wtaermark is easy. It is configuration. Here is code that sets a 2 hour watermark on a streaming dataframe:
 
 ```python
-(streamingDF
-.withWatermark("time", "2 hours")
-.groupBy(col("device"),
-window(col("time"), "1 hour"))
-.count()
-)
+visitor_stream_df.withWatermark("time", "2 hours")\
+  .groupBy(col("device"), window(col("time"), "1 hour"))
+  .count()
 ```
 
+This uses a tumbling window of one hour time slots, with a 2 hour watermark to wait for late data. 
+
 ## Fault tolerance features
-Things can go wrong with real-time data capture. Spark builds in some fault-tolerance features.
+Things can go wrong with real-time data capture. We have seen how data can be late. 
+
+But data may never arrive. 
+
+Or it may arrive at Spark just as our Spark server crashes. Or the power goes off. 
+
+Or an error in our Python code causes us to exit before we process that data. (_surely not! surely we unit tested it? - Ed_)  
+
+A Data Engineer's lot is not always a happy one ;)
+
+Thankfully, Databricks Spark helps us by providing fault-tolerance features.
 
 ### Checkpointing and write-ahead logs
 Before Spark makes a change to some data, it writes a log entry saying what change it is about to make. This is a _write-ahead log entry_.
