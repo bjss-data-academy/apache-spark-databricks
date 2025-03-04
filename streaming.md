@@ -108,7 +108,7 @@ Sliding windows have overlaps in the intervals they represent:
 
 The same three events are happening at 10:32, 11:59 and 13:02 as before. But we're using sliding windows. Each window is one hour wide, but it _overlaps_ other windows so that we get a half-hour granularity. 
 
-The 10:32 event will be recorded _twice_: Once in the 10:00-10:59 window, because the visit occureed in that period. But _also_ in the overalpping window of 10:30 - 11:29. The event also took place in that time period. 
+The 10:32 event will be recorded _twice_: Once in the 10:00-10:59 window, because the visit occureed in that period. But _also_ in the overlapping window of 10:30 - 11:29. The event also took place in that time period. 
 
 The event is not being 'double counted' here. It is simply being included in every relevant time period we are monitoring.
 
