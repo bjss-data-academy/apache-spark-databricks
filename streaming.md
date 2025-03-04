@@ -129,9 +129,13 @@ The two times are different. An event may be detected by the sensor at 11:01. It
 ## When data turns up late
 Here's a problem. We are using tumbling windows to work out how many visitors we get in each hour. We have a real-time visitor sensor. But it has a flaky wireless connection.
 
-This means the "new visitor at 11:02" message sometimes gets to us late, say at 12:15. 
+This means the "new visitor at 10:32" message sometimes gets to us late, say at 14:47:
 
-Oh dear. This means our results cannot be correct. When we worked out how many visits we had between 11:00 and 11:59, we actually had one more than we knew about at that time.
+![Event at 10:32 am not received until 14:47](/images/late-data.png)
+
+Oh dear. 
+
+This means our results cannot be correct. When we worked out how many visits we had between 10:00 and 10:59, we actually had one more than we knew about at that time.
 
 This is an inescapable problem with real-time analytics. 
 
@@ -142,22 +146,24 @@ We can!
 
 In principle, we simply defer the analytics calculation until all the late data has arrived. We can keep accepting new visitor data, keep placing it in the coorect time window, and then once all data is known to be in, do the calculation.
 
-But there's a little details there: _once all data is known to be in_. 
+But there's a little detail there: _once all data is known to be in_. 
 
-How can we know that all data is going to have arrived? Simply put, we cannot. So instead, we decide on a cutoff point.
+How can we know that all data is going to have arrived? 
 
-We put our engineering finger in the air, and guesstimate that any data arriving more then one hour late we will ignore. 
+Simply put, we cannot. So instead, we decide on a cutoff point.
 
-This is called a _watermark_ in Spark times - the amout of time we are willing to wait for late data.
+We put our engineering finger in the air, and guesstimate that any data arriving more than ...ummm... one hour late we will ignore. Choose a timeframe that makes sense given what you know about expected data arrival times.
+
+This is called a _watermark_ in Spark times - the maximum time to wait for late data.
 
 A watermark gives us two benefits:
 
-- Statistically, we will capture _most_ of the late data points, gaining accuracy in the calculations
+- We capture _most_ of the late data points. This makes calculations more accurate
 - We are not waiting _forever_ for data
 
 Not waiting forever is practical. It saves us retaining data in memory indefinitely; we can discard it after the watermark. It provides a time at which we can run our calculation.
 
-Adding a wtaermark is easy. It is configuration. Here is code that sets a 2 hour watermark on a streaming dataframe:
+Adding a watermark is easy. It is configuration. Here is code that sets a 2 hour watermark on a streaming dataframe:
 
 ```python
 visitor_stream_df.withWatermark("time", "2 hours")\
