@@ -218,10 +218,10 @@ Normally, that data is simply lost forever. We were looking the other way at the
 
 Spark adds some features to allow a data source to be _replayed_. We can ask for the data to be repeated to us.
 
-## Partition number and streaming
+## Shuffle partitions number and streaming
+For streaming, the deault number of shuffle partitions (200) is too high, and results in poor performance.
 
-200 default - bad
-change to something better
+Set the number of shuffle partitions to an optimised value, using the `defaultParallelism` constant:
 
 ```python
 spark.conf.set("spark.sql.shuffle.partitions", spark.sparkContext.defaultParallelism)
