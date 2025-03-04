@@ -124,12 +124,16 @@ There are two main approaches to recording the time of an event:
 - _Embedded field_ A field in the data record itself, set from a system clock reading when the data was read.
 - _Time of receipt_ The system clock time when Spark first received the data.
 
-The two times are different. An event may be detected by the sensor at 11:01. It takes time to transmit to us. The time of receipt will always be _later_. Possibly a lot later.
+The two times are different. An event may be detected by the sensor at 11:01. It takes time to transmit to us. The time of receipt will always be _later_. Possibly a lot later. 
+
+Analytics usually wants the time the event happened, not the time it was received. 
 
 ## When data turns up late
-Here's a problem. We are using tumbling windows to work out how many visitors we get in each hour. We have a real-time visitor sensor. But it has a flaky wireless connection.
+Here's a problem. 
 
-This means the "new visitor at 10:32" message sometimes gets to us late, say at 14:47:
+We are using tumbling windows. We are couting visitors in one-hour slots. We have a real-time visitor sensor. But it does not always send events right away.
+
+This means the "new visitor at 10:32" message sometimes gets to us late. Sometimes very late, say at 14:47:
 
 ![Event at 10:32 am not received until 14:47](/images/late-data.png)
 
@@ -188,10 +192,17 @@ A Data Engineer's lot is not always a happy one ;)
 
 Thankfully, Databricks Spark helps us by providing fault-tolerance features.
 
-### Checkpointing and write-ahead logs
+### Write-ahead logs
 Before Spark makes a change to some data, it writes a log entry saying what change it is about to make. This is a _write-ahead log entry_.
 
 If there is a problem after this, the log entry will persist. Spark can then recover from the problem, and have a record of the data that needs to be included.
+
+## Checkpointing
+We can configure a storage location (usually cloud) to store _checkpoints_.
+
+Checkpoints are files containing progress information, context and intermediate results from processing.
+
+Spark can resume processing from a checkpoint - as if nothing had happened.
 
 ### Idempotent sinks
 _Idempotence_ means that an operation can be applied multiple times without changing the end result.
