@@ -12,7 +12,7 @@
 
 Databricks organises data in a three-level structure:
 
-![Data orgnaisation in Databricks](/images/databricks-data-organisation.png)
+![Data organisation in Databricks](/images/databricks-data-organisation.png)
 
 ### Unity Catalog
 At the top, the `Unity Catalog` provides a unified approach to _data governance_. That's a fancy word for things like permissions, retention policy, encryption and so on.
@@ -107,5 +107,9 @@ The transaction log is stored in a folder _delta_log_ as a series of numbered `j
 
 > Delta tables are the default format in Databricks
 
+# Further Reading
+- [Delta tables - Databricks](https://docs.databricks.com/aws/en/delta/tutorial)
+- [Transaction log - Databricks](https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html)
+  
 # Next
 [Back to Contents](/contents.md)
