@@ -1,15 +1,14 @@
 # Data Management in Databricks
+Whenever we have big data, we have a big problem organising it.
 
-> TODO
-> Consider moving this out into databricks specific course
-> re organise as databricks organisation / Big Ideas
-> - Execution Architecture - new - workers task stage job executor driver control plance data plane
-> - Data Organisation - catalog/schema section
-> - Data Governance - new - explain permissions in three level structure
-> - Data Performance - move to performance page - section about partition, skew, shuffle. Add AQE. Add graphics showing wide/narrow work
-> TODO
+Databricks provides the Unity Catalog. This is a unified way of organising data across clouds and clusters, and adding permissions.
 
+We get the standard benefits of a central approach:
+- Global settings
+- Consistent approach
+- Disparate sources treated the same way
 
+## Data Structure
 Databricks organises data in a three-level structure:
 
 ![Data organisation in Databricks](/images/databricks-data-organisation.png)
@@ -106,6 +105,24 @@ _Time-travel_ involves working through the transaction log in time sequence, unt
 The transaction log is stored in a folder _delta_log_ as a series of numbered `json` files.
 
 > Delta tables are the default format in Databricks
+
+# Data Governance
+_Data Governance_ is about how we protect our confidential data and comply with data regulations.
+
+Corporate users of data often have regulations like GDPR and HIPAA to comply with. They generally have internal policies on who can see what, when.
+
+Governance includes controlling data access, enforcing data retention policies, audit trails, deletion, exncryption and more.
+
+All this is tricky with small systems. But it gets more of a problem at scale. Everything is simply 'more'. More data. More cloud stoarge accounts. More users. More restrictions. More to enforce.
+
+Databricks Unity Catalog is aimed at the problem of managing all this. 
+
+## Three level governance
+TODO explain
+
+TODO graphic three level
+
+TODO explain problem of missing permission in mid level
 
 # Further Reading
 - [Delta tables - Databricks](https://docs.databricks.com/aws/en/delta/tutorial)
