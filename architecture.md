@@ -127,6 +127,7 @@ TODO explain problem of missing permission in mid level
 # Further Reading
 - [Delta tables - Databricks](https://docs.databricks.com/aws/en/delta/tutorial)
 - [Transaction log - Databricks](https://www.databricks.com/blog/2019/08/21/diving-into-delta-lake-unpacking-the-transaction-log.html)
+- [Unity Catalog Privileges](https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/privileges)
   
 # Next
 [Back to Contents](/contents.md)
