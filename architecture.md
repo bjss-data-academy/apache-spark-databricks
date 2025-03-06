@@ -127,11 +127,49 @@ All this is tricky with small systems. But it gets more of a problem at scale. E
 Databricks Unity Catalog is aimed at the problem of managing all this. 
 
 ## Three level governance
-TODO explain
+We can grant permissions to the _securable items_ in our data structure. 
 
-TODO graphic three level
+As the structure is three levels deep, starting from the Unity Catalog at the top, we need permissions to use each level.
 
-TODO explain problem of missing permission in mid level
+If we want to create a table, we need permissions on the catalog, schema and table to achieve this:
+
+![Showing three levels of permissions required to create a table](/images/three-level-permissions.png)
+
+Normal SQL `GRANT` syntax is used to set permissions, as follows
+
+### Grant use of catalog
+```sql
+  GRANT USE CATALOG ON CATALOG main TO `allowed-user-group`;
+```
+
+### Grant use of schema
+```sql
+  GRANT USE CATALOG ON CATALOG main TO `allowed-user-group`;
+  GRANT USE SCHEMA ON SCHEMA main.default TO `allowed-user-group`;
+```
+
+### Grant create table
+```sql
+  GRANT CREATE TABLE ON SCHEMA main.default TO `allowed-user-group`;
+```
+
+### Problem: Missing grant
+Watch out for missing any of the required three levels of permissions:
+
+```sql
+  GRANT USE CATALOG ON CATALOG main TO `allowed-user-group`;
+  GRANT CREATE TABLE ON SCHEMA main.default TO `allowed-user-group`;
+```
+
+This will _not_ allow tables to be created on that schema.
+
+Q: Why?
+A: There is no permission to use the schema at all. This overrides the ability to create a table.
+
+### Other permissions
+We can easily `REVOKE` a `GRANT`, as well as secure other pieces of our Databricks data.
+
+For more details, see [Manage Privileges in Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/?language=SQL)
 
 # Further Reading
 - [Delta tables - Databricks](https://docs.databricks.com/aws/en/delta/tutorial)
