@@ -1,5 +1,5 @@
 # Data Management in Databricks
-Whenever we have big data, we have a big problem organising it.
+Whenever we have big data, we have a big problem managing it.
 
 Think about all the permissions that need setting. And data retention policies. Audit controls. Across every different data source. And every different cloud data store.
 
