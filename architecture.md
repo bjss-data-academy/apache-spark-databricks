@@ -1,22 +1,31 @@
 # Data Management in Databricks
 Whenever we have big data, we have a big problem organising it.
 
-Databricks provides the Unity Catalog. This is a unified way of organising data across clouds and clusters, and adding permissions.
+Think about all the permissions that need setting. And data retention policies. Audit controls. Across every different data source. And every different cloud data store.
 
-We get the standard benefits of a central approach:
+It's a lot of work.
+
+To help pull this together, Databricks provides the _Unity Catalog_. 
+
+This is a unified way of organising data across clouds and clusters, and adding permissions.
+
+We get the typical benefits of a central approach:
+
 - Global settings
 - Consistent approach
 - Disparate sources treated the same way
 
-## Data Structure
-Databricks organises data in a three-level structure:
+## Unity Catalog Structure
+Databricks organises data in a three-level structure underneath a Unity Catalog as follows:
 
 ![Data organisation in Databricks](/images/databricks-data-organisation.png)
 
 ### Unity Catalog
-At the top, the `Unity Catalog` provides a unified approach to _data governance_. That's a fancy word for things like permissions, retention policy, encryption and so on.
+At the top, the `Unity Catalog` provides a unified approach to _data governance_. 
 
-We can have as many Unity Catalogs as we need. For most enterprises, having a single one works best.
+Governance a fancy word for things like permissions, retention policy, encryption and so on.
+
+We can have as many Unity Catalogs as we need. For most enterprises, having a single one works best, to give a place for Global settings affecting every data asset the enterprise owns.
 
 ### Schemas
 Within a Catalog we have many `schema`. These group together the various kinds of data resources we need.
