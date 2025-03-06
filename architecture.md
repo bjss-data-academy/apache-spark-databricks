@@ -135,26 +135,30 @@ If we want to create a table, we need permissions on the catalog, schema and tab
 
 ![Showing three levels of permissions required to create a table](/images/three-level-permissions.png)
 
-Normal SQL `GRANT` syntax is used to set permissions, as follows
+Normal SQL `GRANT` syntax is used to set permissions, as follows.
 
 ### Grant use of catalog
+The starting point: allow use of the Unity Catalog to a group `allowed-user-group`:
+
 ```sql
   GRANT USE CATALOG ON CATALOG main TO `allowed-user-group`;
 ```
 
 ### Grant use of schema
+Allow use of a named schema inside that Unity Catalog to that group:
+
 ```sql
-  GRANT USE CATALOG ON CATALOG main TO `allowed-user-group`;
   GRANT USE SCHEMA ON SCHEMA main.default TO `allowed-user-group`;
 ```
 
 ### Grant create table
+Allow fine-grained actions inside that schema to that group. Here, we allow `CREATE TABLE` to be used:
 ```sql
   GRANT CREATE TABLE ON SCHEMA main.default TO `allowed-user-group`;
 ```
 
 ### Problem: Missing grant
-Watch out for missing any of the required three levels of permissions:
+Here's a common gotcha - Watch out for missing any of the required three levels of permissions:
 
 ```sql
   GRANT USE CATALOG ON CATALOG main TO `allowed-user-group`;
