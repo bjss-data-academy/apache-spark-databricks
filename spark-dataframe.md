@@ -190,6 +190,12 @@ direct to a table, to a text file, to a CSV file and more.
 
 The full options can be seen at [class DataFrameWriter docs](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.html#pyspark.sql.DataFrameWriter)
 
+## Wide and Narrow transformations
+p19
+
+## Lazy evaluation
+p19
+
 # Next
 [Transforming Data](/transforming-data.md)
 
