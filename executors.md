@@ -9,14 +9,20 @@ Let's review all the various pieces that make up a Spark cluster:
 ![Spark execution architecture](/images/executors.png)
 
 
-## Driver and worker nodes
+## Driver
 As Databricks processes data in parallel across a cluster of computers, something needs to coordinate the work.
 
-A _Node_ is a _compute resource_ - something that can independently run code. It may be a process on a single computer, or it may be hosted on a different computer in the cluster. 
+The _Driver_ node is a single node that coordinates all activity a charge. 
 
-The _Driver_ node is a single node that coordinates all activity a charge. It is responsible for sending chunks of data out to compute nodes and collecting the results.
+The driver is responsible for sending chunks of data out to compute nodes and collecting the results.
 
+## Worker
 A _Worker_ node performs part of the data processing for our Spark application. There are typically many worker nodes, each running concurrently.
+
+## Node
+A _Node_ is a _compute resource_ - something that can independently run code. 
+
+It may be a process on a single computer, or it may be hosted on a different computer in the cluster. 
 
 ## Executors
 The code that does the work runs inside an executor. Executors hold the data in memory (or local disk) for the code to work on. 
