@@ -23,9 +23,18 @@ Skew refers to unevenly sized partitions:
 
 When we partition on a column that has a larger number of some values than others, we will see skew. 
 
-## Spill
-When a compute resource has too little memory to fit all the data, data must _spill_ onto disk. This is a slow operation.
+Skew can be a problem that slows performance. Instead of processing being evenly split across compute resources, the partition with the most data has to do the most work.
 
+The end result cannot be known until the _last_ result comes in. Processing a skewed data set will take longer than processing a balanced one.
+
+## Spill
+When a compute resource has too little memory to fit all the data, data must _spill_ onto disk:
+
+![Data spilling onto disk](/images/spill.png)
+
+Spill is a problem becomes disk storage is much slower to access than system memory. 
+
+This slow access time results in slow data processing. The code cannot go any faster than the data source can keep up.
 
 ## Wide and Narrow transformations
 p19
