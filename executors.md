@@ -43,13 +43,5 @@ _Tasks_ are the smallest unit of work in a Spark application. Tasks are where nu
 
 A task is executed on a partition of the data. There is one task for each partition.
 
-## Summary
-- __Driver__ Coordinates the execution of the job and schedules tasks
-- __Job__ Overall Spark application execution
-- __Worker__ A computing node in the cluster where executors run
-- __Executor__ Runs tasks and stores data
-- __Stage__ The division of work within a job
-- __Task__ The smallest unit of work, executed on a data partition
-
 # Next
 [Back to Contents](/contents.md)
