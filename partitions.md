@@ -21,7 +21,7 @@ Skew refers to unevenly sized partitions:
 
 ![Skewed partitions](/images/skew.png)
 
-When we partition on a column that has a larger number of some values than others, we will see skew. 
+When we partition on a column that has a larger number of some values than others, we will see skew. In the example, we are partitioning on `job_function` and we see a skewed partition for _Academy Team'.
 
 Skew can be a problem that slows performance. Instead of processing being evenly split across compute resources, the partition with the most data has to do the most work.
 
