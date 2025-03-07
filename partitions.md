@@ -6,7 +6,11 @@ Partitions are logical separations of the dataset into smaller chunks, often goi
 
 Partitioning data allows it to be processed in parallel.
 
-We can partition data based on a _partition key_, which is typically the values in a column. An example would be to partition sales data based on destination country.
+We can partition data based on a _partition key_, which is typically the values in a column:
+
+![Partitioning staff by job function](/images/partition.png)
+
+In the previous image, we have a list of all staff along with their job function. We chunk that up into partitions by their job function.
 
 ## Liquid Clustering
 Liquid Clustering automates partitioning of data. 
