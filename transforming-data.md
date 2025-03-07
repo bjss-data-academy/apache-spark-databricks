@@ -533,7 +533,39 @@ Data from one partition may contribute to several output partitions. These may b
 > Minimize wide transformations to improve performance
 
 ## Lazy evaluation
-p19
+Spark uses _Lazy Evaluation_ for its transform processing. 
+
+This means that transforms are:
+- not executed in the order the code specifies them
+- not executed until triggered by an action
+
+This is very different to normal imperative code in Python, and crucial to understand.
+
+Spark code first builds an _Execution Plan_ of which order transforms will be executed in. This can then be optimised by the _Adaptive Query Execution_ engine.
+
+No work is done until a trigger is executed. These include methods like `collect()`, `count()`, and `save()`, amongst others.
+
+The optimised execution plan runs, the transformations are applied and the results calculated _after_ the trigger executes.
+
+To see this in action with some code:
+
+```python
+df = spark.createDataFrame(data, columns)
+
+# Applying transformations (still no computation)
+df_filtered = df.filter(col("Age") > 30)  # Filter transformation (lazy)
+df_selected = df_filtered.select("Name", "Age")  # Select transformation (lazy)
+```
+
+Nothing has run yet: No data has been processed. To cause that, we need to execute a trigger:
+
+```python
+# Action triggers the computation
+df_selected.show()  # This triggers the actual execution
+```
+
+Now the optimised execution plan will run. 
+
 # Labs
 TODO
 
