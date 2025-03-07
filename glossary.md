@@ -1,5 +1,9 @@
 ## Glossary of terms
 
+- __Azure__ Microsoft's Cloud system
+- __Databricks__ Product company adding features to Apache Spark
+- __Apache Spark__ Open Source library providing Data Engineering tools
+- __PySpark__ Python language bindings to Apache Spark
 - __Driver__ Coordinates the execution of the job and schedules tasks
 - __Job__ Overall Spark application execution
 - __Worker__ A computing node in the cluster where executors run
