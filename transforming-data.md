@@ -507,6 +507,33 @@ This returns a dataframe with a single column containing all the games found in 
 ### flatten
 `flatten()` combines the values from multiple separate arrays into a single array.
 
+
+## Wide and Narrow transformations
+Transformations can be either _wide_ or _narrow_.
+
+The difference lies in how the data is shuffled across the network. 
+
+### Narrow Transformations
+In a narrow transform, each input partition contributes to only one output partition. 
+
+No data is shuffled across the network in this case. It is all kept local to the executor node. 
+
+> __Narrow__: fastest performance
+
+### Wide Transformations
+Data from one partition may contribute to several output partitions. These may be on different nodes, requiring a shuffle operation. Data will be transferred over the network. This is a slow operation.
+
+### Wide vs Narrow Summary
+| Aspect             | Narrow Transformations                           | Wide Transformations                        |
+|--------------------|--------------------------------------------------|--------------------------------------------|
+| **Data Movement**   | No data shuffle between partitions             | Requires data shuffle between partitions  |
+| **Performance**     | More efficient                                 | Less efficient due to shuffling           |
+| **Examples**        | `map()`, `filter()`, `flatMap()`               | `groupByKey()`, `reduceByKey()`, `join()`  |
+
+> Minimize wide transformations to improve performance
+
+## Lazy evaluation
+p19
 # Labs
 TODO
 
