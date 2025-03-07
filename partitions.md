@@ -36,8 +36,5 @@ Spill is a problem becomes disk storage is much slower to access than system mem
 
 This slow access time results in slow data processing. The code cannot go any faster than the data source can keep up.
 
-## Wide and Narrow transformations
-p19
-
-## Lazy evaluation
-p19
+# Next
+[Back to Contents](/contents.md)
