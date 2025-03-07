@@ -43,5 +43,10 @@ _Tasks_ are the smallest unit of work in a Spark application. Tasks are where nu
 
 A task is executed on a partition of the data. There is one task for each partition.
 
+## Partition
+A _Partition_ is a chunk of a dataset. 
+
+Many partitions are required to represent the extent of a large dataset.
+
 # Next
 [Back to Contents](/contents.md)
