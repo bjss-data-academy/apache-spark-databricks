@@ -29,10 +29,10 @@ A job is triggered by an action (e.g., `collect()`, `save()`, `count()`).
 - **Role:** The job is the highest-level unit of work. It is the complete execution flow from the start to the end of the Spark application.
 - **Example:** If you're running a `df.filter().groupBy().agg()` operation in a Databricks notebook, Spark will convert this operation into one or more jobs, depending on the number of transformations and actions involved.
 
-# Stage  
+## Stage  
 A _stage_ is a set of tasks that can run concurrently. 
 
-# Task
+## Task
 _Tasks_ are the smallest unit of work in a Spark application. Tasks are where numbers get crunched. 
 
 A task is executed on a partition of the data. There is one task for each partition.
