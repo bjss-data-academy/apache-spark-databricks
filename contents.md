@@ -126,6 +126,7 @@
 - Test-First: Requirements as Code
 
 ## Certification Resources
+- [Studying for Certificates](/certification.md)
 - databricks guide
 - official past paper source
 
