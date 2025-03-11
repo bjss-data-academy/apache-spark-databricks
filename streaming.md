@@ -1,4 +1,4 @@
-# Streaming Data
+# Working with Streaming Data
 Up to now, data has been a big old pile of static values that we process as a single unit. This is batch processing. It is useful for, well - batches of data. Things like sales reports that come in at the end of a working day.
 
 A lot of real world data isn't like that. It happens in real time. It is constantly changing. 
@@ -26,7 +26,7 @@ Data is received and batched up. At frequent intervals, this small batch of data
 
 This table is unbounded, allowing for many rows.
 
-## Inputs
+## Streaming Input Sources
 Data can be received from a number of sources by Spark:
 
 - __[Apache Kafka](https://kafka.apache.org/)__ The popular event-handling software 
@@ -37,7 +37,7 @@ Spark provides some input sources aimed at unit testing and manual debugging. Th
 - __Sockets__ Regular TCP sockets can serve as input sources
 - __Generator__ a function can generate data
 
-### Trigger types - when does Spark process this data?
+## Trigger types - when does Spark process this data?
 We've got the latest small batch of data into Spark - now what?
 
 We must choose a _trigger condition_ for when our Spark transform code runs. 
@@ -48,7 +48,7 @@ Choose from:
 - _Available Now_: Run the code against all the micro-batches available now, then stop
 - _Continuous Processing_: Long running cycle of fetch data, process, output and repeat
   
-### Outputs
+## Streaming Output Sinks
 Once our code has transformed the data, we need to send the results somewhere.
 
 Options are:
@@ -66,7 +66,7 @@ There are three different approaches to writing output:
 
 The modes differ in how the existing data is treated. `Append` adds to it. `Update` overwrites it. `Complete` rewrites it.
 
-## Aggregations
+## Aggregations over streaming data
 We have seen how dataframes support [aggregate operations](/transforming-data.md) like sum and average.
 
 These are very useful to run over streaming data sources. An example would be finding the total number of website visits in the last hour from web server logs.
@@ -197,7 +197,7 @@ Before Spark makes a change to some data, it writes a log entry saying what chan
 
 If there is a problem after this, the log entry will persist. Spark can then recover from the problem, and have a record of the data that needs to be included.
 
-## Checkpointing
+### Checkpointing
 We can configure a storage location (usually cloud) to store _checkpoints_.
 
 Checkpoints are files containing progress information, context and intermediate results from processing.
@@ -218,7 +218,7 @@ Normally, that data is simply lost forever. We were looking the other way at the
 
 Spark adds some features to allow a data source to be _replayed_. We can ask for the data to be repeated to us.
 
-## Shuffle partitions number and streaming
+## Shuffle partition optimisation
 For streaming, the deault number of shuffle partitions (200) is too high, and results in poor performance.
 
 Set the number of shuffle partitions to an optimised value, using the `defaultParallelism` constant:
@@ -232,4 +232,8 @@ spark.conf.set("spark.sql.shuffle.partitions", spark.sparkContext.defaultParalle
 - [Spark Streaming Guide](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)
 
 # Next
+Unit Testing and Test-Driven Development with Spark Dataframes:
+
+[Testing and TDD with Spark](/spark-unit-testing.md)
+
 [Back to Contents](/contents.md)
