@@ -60,12 +60,12 @@ and we get an output like this:
 
 ![Output from print schema method](/images/scores-print-schema.png)
 
-## Displaying the dataframe content
+## Displaying content
 We can take a look at the data inside the dataframe by typing `display(scores_df)` in a Python notebook window. We will see a tabular output window showing the data:
 
 ![Tabular output of display(scores_df)](/images/display-scores-df.png)
 
-## Using SQL like methods
+## Using SQL-like methods
 SQL we know and love from the relational database world. Dataframes provide familiar SQL-like methods to work with data.
 
 Let's select all rows where the player did not go out for a duck (scored at least one run):
@@ -191,6 +191,8 @@ direct to a table, to a text file, to a CSV file and more.
 The full options can be seen at [class DataFrameWriter docs](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.html#pyspark.sql.DataFrameWriter)
 
 # Next
+Dataframes have more advanced features for transforming data:
+
 [Transforming Data](/transforming-data.md)
 
 [Back to Contents](/contents.md)
