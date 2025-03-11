@@ -1,12 +1,14 @@
-# Using Spark SQL
+# Working with Spark SQL
 We can use familiar SQL to work with tables and views in Databricks.
 
-Spark SQL adds extensions for databricks specific features, such as complex data types and [managed tables](data-storage.md).
+Spark SQL adds extensions for databricks specific features. Examples are support for complex data types and Databricks [managed tables](data-storage.md).
 
 ## Working with Spark SQL
 We can enter SQL directly into a Notebook. 
 
-We need some tables (or views) to work on. Sounds like a good excuse to practice converting a dataframe to a view.
+Before we can use SQL, we need some tables (or views) to work on. 
+
+Sounds like a good excuse to practice converting a dataframe to a view.
 
 ### Convert dataframe to temporary view
 It is often useful to work with dataframe objects using SQL. 
@@ -102,7 +104,7 @@ and execute queries:
 SELECT * FROM scores ORDER BY score DESC;
 ```
 
-### Spark DDL extensions
+## Spark DDL extensions
 Spark _extends DDL_ syntax to allow us to create, populate and query tables using complex data types.
 
 Let's create a table `game_results` suitable for holding a raw piece of JSON data we've ingested from an API.
@@ -188,7 +190,7 @@ Choose the one which fits your needs, based on keeping existing data or deleting
 
 > Take care deleting data in managed tables. You can't get it back.
 
-## Convert data files into tables
+## Converting data files into tables
 Have some data in files, like some CSV or JSON files? We can convert to tables directly.
 
 Convert a CSV file `parts_data.csv` stored at `/mnt/data/parts_data.csv/` to a table:
@@ -199,7 +201,7 @@ USING CSV
 LOCATION '/mnt/data/parts_data.csv/';
 ```
 
-## Auto increment identity columns
+## Auto-incrementing identity columns
 We can mark a column to be auto-generated. Perfect for generating surrogate keys:
 
 ```sql
@@ -301,6 +303,8 @@ For more information on SQL see:
 - [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md)
 
 # Next
+It's important to know how Databricks organises data to get good results from it:
+
+[Databricks Architecture](/architecture.png)
+
 [Back to Contents](/contents.md)
-
-
