@@ -57,7 +57,7 @@ _note: only applies to the driver node, not any worker_
 ## Installing Python libraries
 __%pip__ uses the familiar `pip` installer to add Python libraries to your code.
 
-## Working with Spark SQL
+## Entering Spark SQL
 __%sql__ allows use of Spark SQL. 
 
 Very good to explore a SQL dataset and see what's there.
@@ -67,7 +67,11 @@ Very good to explore a SQL dataset and see what's there.
 select * from users u where u.name = 'Alan' 
 ```
 
+We'll cover Spark SQL in more depth later.
+
 # Next
-[Starting with Dataframes](/spark-dataframe.md)
+Let's look at the heart of Spark's features - the _DataFrame_:
+
+[Starting with Dataframes](/dataframe.md)
 
 [Back to Contents](/contents.md)
