@@ -2,6 +2,8 @@
 
 _Databricks_ and _Apache Spark_ provide indeustry-standard tools to work with big data analytics.
 
+![Logos of Databricks and Spark side by side](/images/db-spark-logos.png)
+
 Together, they provide tools to:
 
 - Organise data at petabyte scale
@@ -18,6 +20,7 @@ The general principles are common to all analytics solutions. Examples will be s
 
 # Next
 Let's start with some basics - how to enter code in Databricks notebooks:
+
 [Using Notebooks](/notebooks.md)
 
 [Back to Contents](/contents.md)
