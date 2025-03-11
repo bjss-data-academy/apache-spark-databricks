@@ -12,11 +12,6 @@ We can partition data based on a _partition key_, which is typically the values 
 
 In the previous image, we have a list of all staff along with their job function. We chunk that up into partitions by their job function.
 
-## Liquid Clustering
-Liquid Clustering automates partitioning of data. 
-
-We choose a column to use to decide on the splits of data, then leave Liquid Clustering to automate the details of that split.
-
 ## Shuffle
 A shuffle happens when data needs to move between different compute nodes. It involves network traffic, which is a slow operation.
 
@@ -39,6 +34,42 @@ When a compute resource has too little memory to fit all the data, data must _sp
 Spill is a problem becomes disk storage is much slower to access than system memory. 
 
 This slow access time results in slow data processing. The code cannot go any faster than the data source can keep up.
+
+# Performance
+Databricks adds features to boost performance. Many of these work right out of the box, without requiring code.
+
+## Liquid Clustering
+Liquid Clustering automates partitioning of data. 
+
+We choose a column to use to decide on the splits of data, then leave Liquid Clustering to automate the details of that split.
+
+## Skip index
+
+## Adaptive Query Execution (AQE)
+
+## Preditive Input/Output
+
+## Lazy Evaluation
+Queries are not computed in the same sequence that we code them in. 
+
+Instead, certain trigger actions will start evalutaion of a chain of transformations. This works alongside Adaptive Query Execution to plan the most efficient execution plan for a query.
+
+As a thought experiment, consider this query:
+
+```sql
+SELECT * FROM users u, messages m WHERE
+u.id = m.user_fk AND
+m.unread = "TRUE"
+```
+
+If the users table has one million users, and each user has sent ten messages, it will be faster to filter by `m.unread = "TRUE"` before doing the table join. That way, we are not joining one million times ten rows, only to filter out most of them.
+
+This position would reverse if we had ten users and one million messages each.
+
+The Adaptive Query Execution algorithm can factor in such facts and more, to provide measurable performance gains.
+
+## Photon Acceleration
+Photon Acceleration is a term given to Databricks' native C++ execution engine. It contains several optimisations. The code uses advanced C++ language features to make computing cycles work harder for us.
 
 # Next
 Next topic: Understanding Built-in functions and user-defined functions
