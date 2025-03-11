@@ -41,4 +41,8 @@ Spill is a problem becomes disk storage is much slower to access than system mem
 This slow access time results in slow data processing. The code cannot go any faster than the data source can keep up.
 
 # Next
+Next topic: Understanding Built-in functions and user-defined functions
+
+[Functions](/functions.md)
+
 [Back to Contents](/contents.md)
