@@ -570,4 +570,8 @@ Now the optimised execution plan will run.
 TODO
 
 # Next
+We can work with tables and trabsform data using Spark SQL:
+
+[Working with Spark SQL](/spark-sql.md)
+
 [Back to Contents](/contents.md)
