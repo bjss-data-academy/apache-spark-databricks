@@ -103,7 +103,7 @@
 - Streaming
 
 ## Working with Streaming Data
-- [Working with streaming data]
+- [Working with streaming data](/streaming.md)
 - Use cases for streaming
 - Spark support for streaming
 - Streaming input sources
