@@ -303,8 +303,8 @@ For more information on SQL see:
 - [SQL for Data Engineering](https://github.com/bjss-data-academy/sql-for-data-engineering/blob/main/README.md)
 
 # Next
-It's important to know how Databricks organises data to get good results from it:
+It's important to know how Databricks manages data to get good results:
 
-[Databricks Architecture](/architecture.md)
+[Data Management in Databricks](/architecture.md)
 
 [Back to Contents](/contents.md)
