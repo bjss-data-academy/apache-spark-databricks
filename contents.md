@@ -140,18 +140,5 @@
 - Builds on Parquet format
 - Compatible with Spark API incl Spark SQL
 
-## TODO MOVE TO EXECUTORS -- Spark Performance Topics
--[Getting good performance](/spark-performance.md)
 
-- Wide and Narrow transformations
-- Partitioning
-- Skew
-- Shuffle
-- Liquid Clustering
-- Deletion Vectors
-- Vacuum
-- Optimize
-- Predictive I/O
-- Adaptive Query Execution
-- Photon Engine
 
