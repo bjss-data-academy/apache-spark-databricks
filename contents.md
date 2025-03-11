@@ -136,18 +136,9 @@
 
 ## Certification Resources
 - [Studying for Certificates](/certification.md)
-- databricks guide
-- official past paper source
+- Databricks study guide
+- Official past paper source
 
-======================
-## CHECK SOMEWHERE - Delta tables and Parquet files
-- https://delta.io/blog/delta-lake-vs-parquet-comparison/
-- default in databricks
-- ACID
-- Time Travel / versioning
-- Audit hostory
-- Builds on Parquet format
-- Compatible with Spark API incl Spark SQL
 
 
 
