@@ -49,4 +49,8 @@ A _Partition_ is a chunk of a dataset.
 Many partitions are required to represent the extent of a large dataset.
 
 # Next
+How data is organised across partitions affects processing times. Let's learn how:
+
+[Partitions, skew and shuffle](/partitions.md)
+
 [Back to Contents](/contents.md)
