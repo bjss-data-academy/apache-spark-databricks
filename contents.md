@@ -94,6 +94,15 @@
 - Shuffle
 - Skew
 - Spill
+- Performance Features
+- Liquid Clustering
+- Predictive Input/Output
+- Lazy Evaluation
+- Adaptive Query Execution
+- Deletion Vectors
+- Vacuum
+- Optimize
+- Photon Acceleration
 
 ## Functions
 - [Built-in functions](/functions.md)
