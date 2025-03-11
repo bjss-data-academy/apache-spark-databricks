@@ -305,6 +305,6 @@ For more information on SQL see:
 # Next
 It's important to know how Databricks organises data to get good results from it:
 
-[Databricks Architecture](/architecture.png)
+[Databricks Architecture](/architecture.md)
 
 [Back to Contents](/contents.md)
