@@ -43,34 +43,50 @@ Liquid Clustering automates partitioning of data.
 
 We choose a column to use to decide on the splits of data, then leave Liquid Clustering to automate the details of that split.
 
-## Skip index
-
-## Adaptive Query Execution (AQE)
-
 ## Preditive Input/Output
+Predictive I/O uses machine learning to figure out the best way to access data. It's part of the Photon Engine set of optimisations and can accelerate reading data and writing data updates.
 
 ## Lazy Evaluation
 Queries are not computed in the same sequence that we code them in. 
 
 Instead, certain trigger actions will start evalutaion of a chain of transformations. This works alongside Adaptive Query Execution to plan the most efficient execution plan for a query.
 
-As a thought experiment, consider this query:
+## Adaptive Query Execution (AQE)
+Adaptive Query Optimisation happens at runtime, when Databricks has information about the specific dataset partitions sizes, and number of shuffles. AQE can work out an efficient execution plan for queries using this information.
 
-```sql
-SELECT * FROM users u, messages m WHERE
-u.id = m.user_fk AND
-m.unread = "TRUE"
-```
+AQE is enabled by default and provides four main features:
 
-If the users table has one million users, and each user has sent ten messages, it will be faster to filter by `m.unread = "TRUE"` before doing the table join. That way, we are not joining one million times ten rows, only to filter out most of them.
+- Dynamically changes sort merge join into broadcast hash join
+- Dynamically coalesces partitions (combines partitions where this would improve throughput)
+- Dynamically handles skew in sort merge join and shuffle hash join by splitting (and replicating if needed) skewed tasks into roughly evenly sized tasks
+- Dynamically detects and propagates empty relations.
 
-This position would reverse if we had ten users and one million messages each.
+AQE looks for operations that would be slow, and makes adjustments to improve performance.
 
-The Adaptive Query Execution algorithm can factor in such facts and more, to provide measurable performance gains.
+## Deletion Vectors
+Deletion vectors are a storage optimisation feature, improving the performance of deleting rows. 
+
+Normally, deleting a row would involve rewriting the entire file. A _Deletion Vector_ instead marks the row as "not to be used anymore". This is faster than rewriting the table.
+
+Queries can pick up on this and not include the row. 
+
+The file can be updated and rewritten at a convemient time using the `VACUUM` or `OPTIMIZE` commands.
+
+### VACUUM
+Removes data marked for deletion.
+
+### OPTIMIZE
+Rewrites data files to improve data layout for Delta tables. 
+
+For tables with liquid clustering enabled, OPTIMIZE rewrites data files to group data by liquid clustering keys. For tables with partitions defined, file compaction and data layout are performed within partitions.
 
 ## Photon Acceleration
 Photon Acceleration is a term given to Databricks' native C++ execution engine. It contains several optimisations. The code uses advanced C++ language features to make computing cycles work harder for us.
 
+# Further Reading
+- [Liquid Clustering](https://docs.databricks.com/aws/en/delta/clustering)
+- [Adaptive Query Execution](https://docs.databricks.com/aws/en/optimizations/aqe)
+  
 # Next
 Next topic: Understanding Built-in functions and user-defined functions
 
