@@ -27,7 +27,7 @@ Governance a fancy word for things like permissions, retention policy, encryptio
 
 We can have as many Unity Catalogs as we need. For most enterprises, having a single one works best, to give a place for Global settings affecting every data asset the enterprise owns.
 
-### Schemas
+### Schema
 Within a Catalog we have many `schema`. These group together the various kinds of data resources we need.
 
 ### Tables
@@ -181,4 +181,8 @@ For more details, see [Manage Privileges in Unity Catalog](https://docs.databric
 - [Unity Catalog Privileges](https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/privileges)
   
 # Next
+Following on from how data is organised, let's learn how code is executed across a computing cluster in Databricks:
+
+[Code Execution in Databricks](/executors.md)
+
 [Back to Contents](/contents.md)
