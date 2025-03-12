@@ -9,7 +9,7 @@ Free-standing functions operate only on the parameters you send them. For exampl
 y = cos(0)
 ```
 
-passes the value of 0 to the `cos` function. That returns the cosine of whatever you pass in. in this case, the cosine of zero. The result is one.
+passes the value of 0 to the `cos` function. That returns the cosine of whatever you pass in. In this case, the cosine of zero. The result of one is returned.
 
 Pure functions like this are independent of any object. They have no memory of the past. They operate only on the data they are given, return a result, and promptly forget all about it.
 
@@ -95,7 +95,25 @@ The built-in functions work the best, having the tightest integration with Spark
 Functions _usually_ perform better from __SQL__ than from Python, Spark or Java. This happens because the Catalyst optimiser is working for the SQL versions, and some data transfers can be avoided.
 
 ## How Spark executes functions
+When we run Pyton IDFs in Spark, things get a little complicated:
 
+![Execution path and conversion to and from JVM to Python](/images/udf-execution.png)
+
+What we are seeing here is two different worlds interoperating:
+
+- Spark is written in a JVM langauge,, like Java or Scala
+- Our IDF is written in Python
+- Python and Java do not directly talk to each other
+- Spark has to translate (_serialise_) Python to JVM, JVM to Python and Python back to JVM (_deserialise_)
+- These conversions take time, so hurt performance
+
+This is common to systems operating under different technologies. 
+
+Be aware of the internal workings as you make use of IDFs.
+
+# Further Reading
+- [UDFs - Databricks Documentation](https://docs.databricks.com/aws/en/udf/)
+  
 # Next
 Working with real-time streaming data:
 
