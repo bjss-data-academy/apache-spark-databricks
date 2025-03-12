@@ -102,14 +102,14 @@ When we run Pyton IDFs in Spark, things get a little complicated:
 What we are seeing here is two different worlds interoperating:
 
 - Spark is written in a JVM langauge,, like Java or Scala
-- Our IDF is written in Python
+- Our UDF is written in Python
 - Python and Java do not directly talk to each other
-- Spark has to translate (_serialise_) Python to JVM, JVM to Python and Python back to JVM (_deserialise_)
+- Spark has to translate (_serialise_) Python to JVM and Python back to JVM (_deserialise_)
 - These conversions take time, so hurt performance
 
 This is common to systems operating under different technologies. 
 
-Be aware of the internal workings as you make use of IDFs.
+Be aware of the internal workings as you make use of UDFs.
 
 # Further Reading
 - [UDFs - Databricks Documentation](https://docs.databricks.com/aws/en/udf/)
