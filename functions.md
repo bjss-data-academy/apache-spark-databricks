@@ -33,7 +33,7 @@ Spend some time familiarising with the functions made available - they will simp
 ## User Defined Functions
 What if we need a function to do a job for us, but it isn't already provided?
 
-We can write our own function as a _User Defined Function+ or _UDF_ for short.
+We can write our own function as a _User Defined Function_ or _UDF_ for short.
 
 We can write a normal Python function and turn it into a UDF by registering it. This allows the function to be used inside SQL statements - a very powerful thing - and dataframes.
 
