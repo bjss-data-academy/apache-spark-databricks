@@ -28,6 +28,7 @@
 - __Adaptive Query Execution (AQE)__ Databricks algorithms to optimise queries before execution
 - __Photon Acceleration__ Databricks optimised native C++ query engine
 - __Unit Test__ turns "should work" into "did work"
+- __User Defined Function__ function we write registered for use within Spark SQL and Dataframes
 
 # Next
 [Back to Contents](/contents.md)
