@@ -85,15 +85,6 @@ display( users_df.select("name", hello_to("name").alias("greeting")))
 
 We get a similar result as for SQL, only based around a dataframe.
 
-## Performance ranking
-Unsurprisingly, different kinds of functions have different execution speeds.
-
-The built-in functions work the best, having the tightest integration with Spark. Other functions are less integrated, and perform differently:
-
-![Function type performance ranking](/images/udf-performance-ranking.png)
-
-Functions _usually_ perform better from __SQL__ than from Python, Spark or Java. This happens because the Catalyst optimiser is working for the SQL versions, and some data transfers can be avoided.
-
 ## How Spark executes functions
 When we run Pyton IDFs in Spark, things get a little complicated:
 
@@ -110,6 +101,15 @@ What we are seeing here is two different worlds interoperating:
 This is common to systems operating under different technologies. 
 
 Be aware of the internal workings as you make use of UDFs.
+
+## Performance ranking
+Unsurprisingly, different kinds of functions have different execution speeds.
+
+The built-in functions work the best, having the tightest integration with Spark. Other functions are less integrated, and perform differently:
+
+![Function type performance ranking](/images/udf-performance-ranking.png)
+
+Functions _usually_ perform better from __SQL__ than from Python, Spark or Java. This happens because the Catalyst optimiser is working for the SQL versions, and some data transfers can be avoided.
 
 # Further Reading
 - [UDFs - Databricks Documentation](https://docs.databricks.com/aws/en/udf/)
