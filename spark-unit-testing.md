@@ -114,16 +114,27 @@ Another way of looking at this is _requirements capture_. We name the test accor
 
 ## Keep tests F.I.R.S.T.
 
+## Separate I/O from logic
+
 ## Test behaviour, not implementation
 
-## Separate I/O from logic
+
 
 ## Test all behaviours we need to work
 
+## Running Pytest in a notebook
+TODO
+
+I have aboslutely no idea dn neither the internet nor AI was much help.
+
+Unittest is built-in to Databricks, as they jumped the wrong way. But we could use unittest instead.
+
 # Further Reading
 To improve TDD, unit test and design skills, check out our comprehensive guide:
+- [Advanced TDD](https://github.com/bjssacademy/advanced-tdd)
 
-- [Advanced TDD](https://github.com/bjssacademy/advanced-tdd) 
+Using tests inside Databricks notebooks:
+- [Test Databricks notebooks](https://learn.microsoft.com/en-us/azure/databricks/notebooks/test-notebooks)
 
 # Next
 Resources to help study for certificates:
