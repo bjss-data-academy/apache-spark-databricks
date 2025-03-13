@@ -114,7 +114,7 @@ Which returns all unique values of column `title`:
 ### dropDuplicates()
 See also [dropDuplicates()](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.dropDuplicates.html) for a way to specify which combination of columns needs to be unique.
 
-## Join
+## Inner Join
 Generally, we need to combine data from multiple tables in our silver layer processing. The `.join()` method allows us to combine dataframes.
 
 We'll start with two related tables. `scores_df` once again holds the score information for a number of players. Additional reference table `contacts_df` holds email contact details for players:
