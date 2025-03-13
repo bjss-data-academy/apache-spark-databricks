@@ -16,7 +16,7 @@ As we write tests for our Spark analytics code, we will be applying these princi
 - Separate I/O from logic
 - Test all behaviours we need to work
 
-More detail is available in the prerequisites, but let's summarise.
+More detail is available in the prerequisites/further reading, but let's summarise.
 
 ## Arrange, Act, Assert
 A unit test has three sections to it, called the Arrange, Act and Assert sections.
