@@ -164,21 +164,25 @@ giving
 ![Finding email of highest scoring player](/images/winner-email.png)
 
 ## Left Join
-Let's look at that example again, but this time, some users are _missing_ from the contacts table. It happens.
+What happens when some users are _missing_ from the contacts table? It happens.
 
-If we used the join as above, we would never see the scores of those missing contacts.
+If we used the join as above, we would _never see_ the scores of those missing contacts.
 
-Sometimes this is perfect. But sometimes, it isn't - and we really want a row with the player's score in it, even if we have no contact data.
+Sometimes this is perfect for our application. 
 
-This is a job of the _left join_. We add an extra parameter named `how` to the `join` method call:
+Other times, not so much. We really want a row with the player's score in it, even if we have no contact data.
+
+This is a job for _left join_. 
+
+We add an extra parameter named `how` to the `join` method call:
 
 ```python
 scores_contacts_df = scores_df.join(contacts_df, on="player", how="left")
 ```
 
-That `how="left"`` causes the new dataframe `scores_scontacts_df` to contain _every_ row of `scores_df` joined to _all matching rows_ of contacts_df. It will place a _null_ values in all columns where a matching row in `contacts_df` does not exist:
+That `how="left"` causes the new dataframe `scores_scontacts_df` to contain _every_ row of `scores_df` joined to _all matching rows_ of contacts_df. We get a `null` in columns where no matching row exists.
 
-Let's remove Dan and Tom from the contacts list:
+As an example, suppose we only have contact details for Alan and Rosie:
 
 ```python
 contacts_df = spark.createDataFrame([
@@ -187,9 +191,11 @@ contacts_df = spark.createDataFrame([
     ], ["Player", "Email"])
 ```
 
-and run the left join code to see this output:
+When we run the left join code on `scores_df` and `contacts_df`, we see this output:
 
 ![Output of left join contains nulls where we have no matching information](/images/left-join.png)
+
+You can see the `null` values in columns where no matching data exists. But the rows _are still there_.
 
 ## Union
 Dataframes are _immutable_. Once we have a dataframe, that's it: we can't add or remove rows.
