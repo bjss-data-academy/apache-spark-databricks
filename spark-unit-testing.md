@@ -10,6 +10,7 @@ As we write tests for our Spark analytics code, we will be applying these princi
 
 - Arrange, Act, Assert
 - Write functions that work on DataFrames
+- Use a separate test notebook
 - Keep tests F.I.R.S.T
 - Test behaviour, not implementation
 - Separate I/O from logic
@@ -108,6 +109,8 @@ Which concisely describes what behaviour we are testing in this test: _does it s
 Another way of looking at this is _requirements capture_. We name the test according to what needs to be done.
 
 ## Write functions that work on DataFrames
+
+## Use a separate test notebook
 
 ## Keep tests F.I.R.S.T.
 
