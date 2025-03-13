@@ -163,6 +163,34 @@ giving
 
 ![Finding email of highest scoring player](/images/winner-email.png)
 
+## Left Join
+Let's look at that example again, but this time, some users are _missing_ from the contacts table. It happens.
+
+If we used the join as above, we would never see the scores of those missing contacts.
+
+Sometimes this is perfect. But sometimes, it isn't - and we really want a row with the player's score in it, even if we have no contact data.
+
+This is a job of the _left join_. We add an extra parameter named `how` to the `join` method call:
+
+```python
+scores_contacts_df = scores_df.join(contacts_df, on="player", how="left")
+```
+
+That `how="left"`` causes the new dataframe `scores_scontacts_df` to contain _every_ row of `scores_df` joined to _all matching rows_ of contacts_df. It will place a _null_ values in all columns where a matching row in `contacts_df` does not exist:
+
+Let's remove Dan and Tom from the contacts list:
+
+```python
+contacts_df = spark.createDataFrame([
+    ("Alan", "al@example.com"), 
+    ("Rosie", "rosie@example.com"),
+    ], ["Player", "Email"])
+```
+
+and run the left join code to see this output:
+
+![Output of left join contains nulls where we have no matching information](/images/left-join.png)
+
 ## Union
 Dataframes are _immutable_. Once we have a dataframe, that's it: we can't add or remove rows.
 
