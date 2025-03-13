@@ -9,6 +9,7 @@ This section assumes familiarity with
 As we write tests for our Spark analytics code, we will be applying these principles:
 
 - Arrange, Act, Assert
+- Write functions that work on DataFrames
 - Keep tests F.I.R.S.T
 - Test behaviour, not implementation
 - Separate I/O from logic
@@ -105,6 +106,8 @@ def test_sums_three_numbers():
 Which concisely describes what behaviour we are testing in this test: _does it sum three numbers?_
 
 Another way of looking at this is _requirements capture_. We name the test according to what needs to be done.
+
+## Write functions that work on DataFrames
 
 ## Keep tests F.I.R.S.T.
 
