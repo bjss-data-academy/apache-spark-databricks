@@ -295,6 +295,9 @@ We can use SQL statements directly against the dataframe object in Python:
 This can be useful as it allows SQL to be generated inside Python code. 
 
 # Further reading
+Databricks SQL cheat sheet:
+- [Cheat Sheet](https://www.databricks.com/sites/default/files/2023-09/databricks-sql-cheatsheet.pdf)
+
 Databricks documentation:
 - [CREATE TABLE options](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-table-using)
 
