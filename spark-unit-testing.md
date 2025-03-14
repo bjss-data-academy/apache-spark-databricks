@@ -105,6 +105,8 @@ Which concisely describes what behaviour we are testing in this test: _does it s
 
 Another way of looking at this is _requirements capture_. We name the test according to what needs to be done.
 
+> Pytest _requires_ test names to start with **test_** so the framework can find them
+
 ## Test behaviour, not implementation
 A unit test of the SUT should not know _anything_ about how the SUT is implemented.
 
@@ -112,7 +114,7 @@ Another way to look at this is the SUT can have its internal working completely 
 
 If the SUT is a function, the test should depend only on the inputs and outputs of that function. Not anything implemented nor assumed inside that function.
 
-> Test behaviour not implementation is really important
+> Testing behaviour not implementation is __really important__ if you want to avoid massive pain as the code is changed
 
 ## Write functions that work on DataFrames
 Our data transforms are best expressed as a function that takes one or more dataframes as input, and returns a dataframe as output:
@@ -177,7 +179,140 @@ Documentation on doing this is thin on the ground, and the AI was no help whatso
 
 So with thanks to this [medium.com post](https://medium.com/@ssharma31/integrating-pytest-with-databricks-a9e47afecd85), here is how to run pytest inside Notebooks.
 
-TODO
+### Installing pytest
+Step 1: Create a new notebook.
+
+Step 2: Create a code cell and enter this code:
+
+```python
+%sh pip install pytest
+```
+
+Step 3: Run the cell to install the pytest library into this notebook.
+
+
+Step 4: Create another code cell. Enter this code:
+
+```python
+import pytest
+import os
+import sys
+import test_sum
+
+sys.dont_write_bytecode = True
+os.chdir("/Workspace/Users/alan.mellor@bjss.com/")
+```
+
+Step 5: Run that code. Nothing exciting seems to happen, but check thhat it executes successfully.
+
+That's the installation magic done. Next up: writing a test to run.
+
+### Creating a test file
+We create a new _file_ to add our test code into.
+
+- Click _Workspace_ on the left-side menu bar
+- Click the _Create_ button over on the right hand top
+- Select _File_
+- Enter the file name *test_sum.py*
+
+![Menu selection screenshot](/images/workspace-create-file.png)
+
+> The filename for a test file __must__ start with **test_** when using Pytest
+
+Inside our new file, enter the following test code:
+
+```python
+import pytest
+from sum import *
+
+def test_sums_two_numbers():
+  # Arrange
+  numbers = [1, 2]
+
+  # Act
+  actual = calculate_sum(numbers)
+
+  # Assert
+  expected = 1 + 2
+  assert actual == expected
+```
+
+This will be the single unit test we will run. 
+
+We've done this test-first style. We've decided to have a function `calculate_sum` that will take an array of numbers. It should add them up and return a single number as the result.
+
+Next job - write the code (or get your favourite AI code grunt to do it, of course):
+
+__Create a new file__ in the workspace (as we did above), and name it _sum.py_.
+
+Enter this code:
+
+```python
+def calculate_sum(numbers):
+    return sum(numbers)
+```
+
+We're ready to run our tests against this file. For that, we need to go back to our notebook and add a cell.
+
+### Running all tests from the Notebook
+Go back to our Notebook, and add the following code cell:
+
+```python
+pytest.main(["-v"])
+```
+
+Run that cell (assuming the two cells above it have run). It will find all our *test_* files and run all the tests in them.
+
+We see:
+
+![Unit test run in notebook output](/images/pytest-output-notebook.png)
+
+All is well!
+
+### Confirm test can fail
+It is best to follow the [Red, Green, Refactor (RGR)](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter05/chapter05.md) cycle of testing. Here, we make sure a test _fails_ before we write code that makes it pass. This builds confidence that the test is _actually_ testing what we want it to test.
+
+Above, we pasted in some code that made the test pass.
+
+Let's deliberatly break that production code, just to check the test can fail.
+
+We modify _sum.py_ to look like this:
+
+```python
+def calculate_sum(numbers):
+    return -999 # sum(numbers)
+```
+
+Run the test again in our notebook, and see:
+
+![Test failure displayed in notebook](/images/pytest-failed-notebook.png)
+
+Put the _sum.py_ code back to where it worked, run the test again to double check. 
+
+> __WARNING__
+> The tests _do not fail_
+>
+> This is due to some Python caching in Dtabaricks presenting the "first code we entered" to the test.
+>
+> Massive catastrophe for testing.
+>
+> Have yet to find a solution
+
+## Example using DataFrame
+
+Add the following two files into the workspace (as above):
+
+__calculate_average.py__:
+
+```python
+```
+
+__test_average.py__:
+
+```python
+```
+
+Go to the notebook and run the cells. See the test output.
 
 # Further Reading
 To improve TDD, unit test and design skills, check out our comprehensive guide:
