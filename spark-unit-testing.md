@@ -120,7 +120,7 @@ If the SUT is a function, the test should depend only on the inputs and outputs 
 ## Write functions that work on DataFrames
 Our data transforms are best expressed as a function that takes one or more dataframes as input, and returns a dataframe as output:
 
-'''python
+```python
 def findEmailsOfTopScorers(scores_df:DataFrame, contacts_df:DataFrame) -> DataFrame:
    # implementation
    return result_df
