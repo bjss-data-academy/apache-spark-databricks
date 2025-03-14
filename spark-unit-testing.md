@@ -108,26 +108,79 @@ Which concisely describes what behaviour we are testing in this test: _does it s
 
 Another way of looking at this is _requirements capture_. We name the test according to what needs to be done.
 
+## Test behaviour, not implementation
+A unit test of the SUT should not know _anything_ about how the SUT is implemented.
+
+Another way to look at this is the SUT can have its internal working completely replaced by some other way of achieveing the same goal, and the test should pass.
+
+If the SUT is a function, the test should depend only on the inputs and outputs of that function. Not anything implemented nor assumed inside that function.
+
+> Test behaviour not implementation is really important
+
 ## Write functions that work on DataFrames
+Our data transforms are best expressed as a function that takes one or more dataframes as input, and returns a dataframe as output:
+
+'''python
+def findEmailsOfTopScorers(scores_df:DataFrame, contacts_df:DataFrame) -> DataFrame:
+   # implementation
+   return result_df
+```
+
+These are ideally suited to unit testing behaviour, not implementation.
 
 ## Use a separate test notebook
+Test code is not part of the production application.
+
+One reasonable way to organise tests is to keep them in separate notebooks/files from the production code.
 
 ## Keep tests F.I.R.S.T.
+Unit tests should be FIRST:
 
+- Fast: run very quickly, wo we can afford to run them often
+- Isolated: Tests must be able to run in any order or individually and not depend on prior test runs
+- Repeatable: The test result is consistent. No flaky tests. No dependency on anything outside the test setup
+- Self-checking: The test has an assertion to automatically check the results. No human inspection
+- Timely: We write tests at the same time as we write production code. It is not a spearate project phase
+
+For our Spark code we achieve these ideas by:
+- Putting logic into functions working on DataFrames (see above)
+- Corollary: keeping table and file read/writes out of the analytics logic
+- Avoiding global variables
+
+That will result in code which supports FIRST test goals.
+ 
 ## Separate I/O from logic
+The general principle of separation of concerns, mentioned above.
 
-## Test behaviour, not implementation
+Instead of one function to read a table, transform, write a table - split into three functions:
+- read table into dataframe
+- transform dataframe into a result dataframe
+- write dataframe to table
 
+That allows us to rapidly test the transform logic in isolation.
 
+The transform code is the bulk of what we are responsible for inventing.
 
 ## Test all behaviours we need to work
+How many tests do we need?
+
+_One test per everything we care about working_.
+
+Don't care if something works or gives a wrong result? Don't test it!
+Go one step further: if we don't care about the answer, _delete that code_. No answer is as good as a wrong answer, and much less code to maintain.
+
+If our users _do_ care about the results being correct, __test__. Put your money where your mouth is.
+
+Don't make the users test your code for you.
+
+> Tests: Turn _it should work_ into _it did work_
 
 ## Running Pytest in a notebook
+Documentation on doing this is thin on the ground, and the AI was no help whatsoever.
+
+So with thanks to this [medium.com post](https://medium.com/@ssharma31/integrating-pytest-with-databricks-a9e47afecd85), here is how to run pytest inside Notebooks.
+
 TODO
-
-I have aboslutely no idea dn neither the internet nor AI was much help.
-
-Unittest is built-in to Databricks, as they jumped the wrong way. But we could use unittest instead.
 
 # Further Reading
 To improve TDD, unit test and design skills, check out our comprehensive guide:
