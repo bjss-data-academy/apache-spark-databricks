@@ -302,17 +302,50 @@ Put the _sum.py_ code back to where it worked, run the test again to double chec
 
 Add the following two files into the workspace (as above):
 
-__calculate_average.py__:
-
-```python
-```
 
 __test_average.py__:
 
 ```python
+import pytest
+from calculate_average import *
+
+def test_finds_average_score():
+  # Arrange
+  scores = [
+    {"player":"Alan",  "game":"galaga", "score":14950},
+    {"player":"Dan",   "game":"cricket", "score":110},
+    {"player":"Rosie", "game":"snooker", "score":147},
+    ]
+
+    scores_df = spark.createDataFrame(scores)
+
+  # Act
+  actual = calculate_average(scores_df)
+
+  # Assert
+  expected = (14950 + 110 + 147)/3 
+  assert actual == expected
+```
+
+__calculate_average.py__:
+
+```python
+from pyspark.sql import DataFrame
+from pyspark.sql.functions import avg
+
+def calculate_average(scores_df: DataFrame) -> int:
+    return scores_df.select(avg("score")).collect()[0][0]
 ```
 
 Go to the notebook and run the cells. See the test output.
+
+> __WARNING__
+> 
+> Did not pick up test to run.
+>
+> No solution found yet.
+>
+> Probably need to go direct to writing code and tests as files in a git repo as Databricks not test-friendly 
 
 # Further Reading
 To improve TDD, unit test and design skills, check out our comprehensive guide:
