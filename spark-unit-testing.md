@@ -171,7 +171,9 @@ The transform code is the bulk of what we are responsible for inventing.
 ## Test all behaviours we need to work
 How many tests do we need?
 
-_One test per everything we care about working_.
+_One test per behaviour we care about working_.
+
+Note this does not necessarily mean one test per function. If that functions has five separate behaviours we care about, that's five separate tests.
 
 Don't care if something works or gives a wrong result? Don't test it!
 Go one step further: if we don't care about the answer, _delete that code_. No answer is as good as a wrong answer, and much less code to maintain.
