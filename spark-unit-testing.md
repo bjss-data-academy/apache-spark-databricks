@@ -54,7 +54,6 @@ In our example, we only need to arrange one thing: create some test data values 
 ```
 
 > _Test Smell: Messy Arrange_
-> 
 > If the Arrange code looks messy, our system under test is coupled to too many things.
 >
 > Fix: Reduce coupling by splitting the design
@@ -71,7 +70,6 @@ actual = calculate_su( input )
 Using the name _actual_ is a convention for the actual result of our action. 
 
 > _Test Smell: Messy Act_
-> 
 > If the Act code is hard to follow, then our code is hard to use.
 > 
 > Fix: Refactor. Consider _Replace Parameters With Parameter Object_ and _Extract Method_ to reduce multi-stage method calls
@@ -89,7 +87,6 @@ In the example, we want to verify that we got the sum of our three input numbers
 Note we used `expected` as an _explaining variable_ so future readers know that is the value we are expecting. We also left the computer to add up the numbers, to avoid mistakes.
 
 > _Test Smell: Messy Arrange_
->
 > If the Assert code is a mess, our _output mechanism_ is clunky. The way we communicate results of our action is difficult to use.
 >
 > Fix: Consider replacing with a simpler mechanism
