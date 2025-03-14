@@ -122,7 +122,7 @@ Our data transforms are best expressed as a function that takes one or more data
 
 ```python
 def findEmailsOfTopScorers(scores_df:DataFrame, contacts_df:DataFrame) -> DataFrame:
-   # implementation
+   # implementation goes here - unimportant detail from test perspective
    return result_df
 ```
 
