@@ -1,5 +1,13 @@
 # How to unit test transforms
-At its most basic level, testing turns _should work_ into _did work_. But it is also a useful aid in requirements capture and software design, when test are written first (TDD).
+At its most basic level, testing turns _should work_ into _did work_. 
+
+We are going to write _automated unit tests_. These give us the following benefits:
+
+- Verify code produces correct results
+- Build up a _regression test suite_ so that future changes are known not to break anything
+- Document our requirements: what should our code do?
+- Document our software API design decisions
+- Are _Executable Specifications_ so do not go out of date as other written documents do
 
 ## Prerequisites
 This section assumes familiarity with
